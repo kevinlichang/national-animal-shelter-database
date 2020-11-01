@@ -1,4 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1>Animals</h1>
+
+<form>
+  <fieldset>
+    <legend>Add Animal</legend>
+    <input type="text" name="name" placeholder="Name">
+    <input type="text" name="location-shelter" placeholder="Shelter Location">
+    <input type="text" name="location-cage" placeholder="Cage Location">
+    <input type="text" name="type" placeholder="Type of Animal">
+    <input type="radio" name="sex" id="male-sex" value="1">
+    <label for="male-sex">Male</label>
+    <input type="radio" name="sex" id="female-sex" value="0">
+    <label for="female-sex">Female</label>
+  </fieldset>
+</form>
 {% endblock content %}
