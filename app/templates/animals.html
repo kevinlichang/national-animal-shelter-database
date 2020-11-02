@@ -3,25 +3,29 @@
 <h1>Animals</h1>
 
 <form style="border: solid;">
-  <fieldset>
-    <legend>Add Animal</legend>
-    <input type="text" name="name" placeholder="Name">
-    <input type="text" name="type" placeholder="Type of Animal">
+  <h3>Add Animal</h3>
+  
+  <input type="text" name="name" placeholder="Name">
+  <input type="text" name="type" placeholder="Type of Animal">
 
+  <fieldset>
     <input type="radio" name="sex" id="male-sex" value="1">
     <label for="male-sex">Male</label>
     <input type="radio" name="sex" id="female-sex" value="0">
     <label for="female-sex">Female</label>
+  </fieldset>  
 
-    <input type="number" name="weight" placeholder="Weight in Pounds">
-    <input type="text" name="location-history" placeholder="Location History">
-    <input type="checkbox" name="adopted" id="adopted" value="1">
-    <label for="adopted">Adopted</label>
-    <input type="checkbox" name="fostered" id="fostered" value="1">
-    <label for="fostered">Fostered</label>
-    
-    <input type="text" name="chip-ID" placeholder="Chip ID">
-    <input type="text" name="description" placeholder="Description">
+  <input type="number" name="weight" placeholder="Weight in Pounds">
+  <input type="text" name="location-history" placeholder="Location History">
+  <input type="checkbox" name="adopted" id="adopted" value="1">
+  <label for="adopted">Adopted</label>
+  <input type="checkbox" name="fostered" id="fostered" value="1">
+  <label for="fostered">Fostered</label>
+  
+  <input type="text" name="chip-ID" placeholder="Chip ID">
+  <input type="text" name="description" placeholder="Description">
+
+  <fieldset>
     <input type="checkbox" name="good-with-dogs" id="good-with-dogs" value="1">
     <label for="good-with-dogs">Good with dogs</label>
     <input type="checkbox" name="good-with-cats" id="good-with-cats" value="1">
@@ -30,9 +34,9 @@
     <label for="good-with-small-animals">Good with small animals</label>
     <input type="checkbox" name="good-with-children" id="good-with-children" value="1">
     <label for="good-with-children">Good with children</label>
-    
-    <input type="submit" name="add animal" value="Add Animal" id="add-animal-submit">
   </fieldset>
+
+  <input type="submit" name="add animal" value="Add Animal" id="add-animal-submit">
 </form>
 
 <h3>List of Animals</h3>
