@@ -2,17 +2,54 @@
 {% block content %}
 <h1>Animals</h1>
 
-<form>
+<form style="border: solid;">
   <fieldset>
     <legend>Add Animal</legend>
     <input type="text" name="name" placeholder="Name">
-    <input type="text" name="location-shelter" placeholder="Shelter Location">
-    <input type="text" name="location-cage" placeholder="Cage Location">
     <input type="text" name="type" placeholder="Type of Animal">
+
     <input type="radio" name="sex" id="male-sex" value="1">
     <label for="male-sex">Male</label>
     <input type="radio" name="sex" id="female-sex" value="0">
     <label for="female-sex">Female</label>
+
+    <input type="number" name="weight" placeholder="Weight in Pounds">
+    <input type="text" name="location-history" placeholder="Location History">
+    <input type="checkbox" name="adopted" id="adopted" value="1">
+    <label for="adopted">Adopted</label>
+    <input type="checkbox" name="fostered" id="fostered" value="1">
+    <label for="fostered">Fostered</label>
+    
+    <input type="text" name="chip-ID" placeholder="Chip ID">
+    <input type="text" name="description" placeholder="Description">
+    <input type="checkbox" name="good-with-dogs" id="good-with-dogs" value="1">
+    <label for="good-with-dogs">Good with dogs</label>
+    <input type="checkbox" name="good-with-cats" id="good-with-cats" value="1">
+    <label for="good-with-cats">Good with cats</label>
+    <input type="checkbox" name="good-with-small-animals" id="good-with-small-animals" value="1">
+    <label for="good-with-small-animals">Good with small animals</label>
+    <input type="checkbox" name="good-with-children" id="good-with-children" value="1">
+    <label for="good-with-children">Good with children</label>
+    
+    <input type="submit" name="add animal" value="Add Animal" id="add-animal-submit">
   </fieldset>
 </form>
+
+<h3>List of Animals</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">Sex</th>
+      <th scope="col">Weight</th>
+      <th scope="col">Location History</th>
+      <th scope="col">Adopted?</th>
+      <th scope="col">Fostered?</th>
+      <th scope="col">Chip ID</th>
+      <th scope="col">Description</th>
+      <th scope="col">Good With:</th>
+    </tr>
+  </thead>
+</table>
 {% endblock content %}
