@@ -1,4 +1,45 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1>Shelters</h1>
+
+<form style="border-style: ridge;">
+  <h3>Add Shelter</h3>
+  <input type="text" name="name" placeholder="Name">
+  <fieldset>
+    <legend>Street Address</legend>
+    <input type="text" name="address-street" placeholder="Street">
+    <input type="text" name="address-city" placeholder="City">
+    <input type="text" name="address-state" placeholder="State">
+    <input type="text" name="address-zip" placeholder="Zip Code">
+  </fieldset>
+
+  <input type="number" name="animal-quantity" placeholder="Animal Quantity">
+  <input type="nummber" name="cage-quantity" placeholder="Cage Quantity">
+  <input type="number" name="total-cage-capacity" placeholder="Total Cage Capacity">
+  <input type="number" name="curr-amt-foster-parents" placeholder="Current Amount of Foster Parents">
+  <input type="number" name="curr-amt-ani-fostered" placeholder="Current Amount of Animals Fostered">
+  <input type="checkbox" name="rescue-grp" id="rescue-grp" value="1">
+  <label for="rescue-grp">Rescue Group</label>
+  
+  <input type="submit" name="add-shelter" value="Add Shelter" id="add-shelter-submit">
+</form>
+
+<h3>List of Shelters</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Street</th>
+      <th scope="col">City</th>
+      <th scope="col">State</th>
+      <th scope="col">Zip Code</th>
+      <th scope="col">Animal Quanity</th>
+      <th scope="col">Cage Quantity</th>
+      <th scope="col">Total Cage Capacity</th>
+      <th scope="col">Current Amount of Foster Parents</th>
+      <th scope="col">Current Amount of Animals Fostered</th>
+      <th scope="col">Rescue Group</th>
+    </tr>
+  </thead>
+</table>
 {% endblock content %}
