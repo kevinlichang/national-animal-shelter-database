@@ -1,4 +1,27 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1>Cages</h1>
+
+<form style="border: solid;">
+    <h3>Add Cage</h3>
+    
+    <input type="number" name="shelterID" placeholder="Shelter ID">
+    <input type="text" name="cage_location" placeholder="Cage Location in Shelter">
+    <input type="text" name="cage_name" placeholder="Cage Name">
+    <input type="text" name="animal_type" placeholder="Animal Type">
+   
+    <input type="submit" name="add cage" value="Add Cage" id="add-cage-submit">
+  </form>
+  
+  <h3>List of Cages</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Shelter ID</th>
+        <th scope="col">Cage Location in Shelter</th>
+        <th scope="col">Cage Name</th>
+        <th scope="col">Animal Type</th>
+      </tr>
+    </thead>
+  </table>
 {% endblock content %}
