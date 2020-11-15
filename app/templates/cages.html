@@ -1,16 +1,43 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="container-fluid">
 <h1>Cages</h1>
 
-<form style="border: solid;">
+<form>
     <h3>Add Cage</h3>
     
-    <input type="number" name="shelterID" placeholder="Shelter ID">
+    <!-- <input type="number" name="shelterID" placeholder="Shelter ID">
     <input type="text" name="cage_location" placeholder="Cage Location in Shelter">
     <input type="text" name="cage_name" placeholder="Cage Name">
     <input type="text" name="animal_type" placeholder="Animal Type">
    
-    <input type="submit" name="add cage" value="Add Cage" id="add-cage-submit">
+    <input type="submit" name="add cage" value="Add Cage" id="add-cage-submit"> -->
+
+  
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="shelterID">Shelter ID</label>
+        <input type="number" class="form-control" id="shelterID" name="shelterID">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="cage_location">Cage Location in Shelter</label>
+        <input type="text" class="form-control" id="cage_location" name="cage_location">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="cage_name">Cage Name</label>
+        <input type="text" class="form-control" id="cage_name" name="cage_name">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="animal_type">Animal Type</label>
+        <input type="text" class="form-control" id="animal_type" name="animal_type">
+      </div>
+    </div>
+
+    
+    <button type="submit" class="btn btn-primary" id="add-cage">Add Cage</button>
+    
   </form>
   
   <h3>List of Cages</h3>
@@ -36,4 +63,6 @@
       </tr>
     </tbody>
   </table>
+
+</div>
 {% endblock content %}
