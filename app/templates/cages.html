@@ -3,7 +3,7 @@
 <div class="container-fluid">
 <h1>Cages</h1>
 
-<form>
+<form class="mb-2">
     <h3>Add Cage</h3>
     
     <!-- <input type="number" name="shelterID" placeholder="Shelter ID">
@@ -13,33 +13,32 @@
    
     <input type="submit" name="add cage" value="Add Cage" id="add-cage-submit"> -->
 
-  
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="shelterID">Shelter ID</label>
-        <input type="number" class="form-control" id="shelterID" name="shelterID">
+        <label for="cageShelterID">Shelter ID</label>
+        <input type="number" class="form-control" id="cageShelterID" name="cageShelterID">
       </div>
       <div class="form-group col-md-6">
-        <label for="cage_location">Cage Location in Shelter</label>
-        <input type="text" class="form-control" id="cage_location" name="cage_location">
+        <label for="cageLocation">Cage Location in Shelter</label>
+        <input type="text" class="form-control" id="cageLocation" name="cageLocation">
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="cage_name">Cage Name</label>
-        <input type="text" class="form-control" id="cage_name" name="cage_name">
+        <label for="cageName">Cage Name</label>
+        <input type="text" class="form-control" id="cageName" name="cageName">
       </div>
       <div class="form-group col-md-6">
-        <label for="animal_type">Animal Type</label>
-        <input type="text" class="form-control" id="animal_type" name="animal_type">
+        <label for="cageAnimalType">Animal Type</label>
+        <input type="text" class="form-control" id="cageAnimalType" name="cageAnimalType">
       </div>
     </div>
 
     
-    <button type="submit" class="btn btn-primary" id="add-cage">Add Cage</button>
+    <button type="submit" class="btn btn-primary" id="addCageBtn">Add Cage</button>
     
   </form>
-  
+  <hr>
   <h3>List of Cages</h3>
   <table class="table">
     <thead>

@@ -1,21 +1,34 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Trainers</h1>
+<div class="container-fluid">
+  <h1>Trainers</h1>
 
-<form style="border: solid;">
+  <form class="mb-2">
     <h3>Add Trainer</h3>
-    
-    <input type="text" name="first_name" placeholder="First Name">
-    <input type="text" name="last_name" placeholder="Last Name">
-    <input type="text" name="specialty" placeholder="Specialty">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="trainerFName">First Name</label>
+        <input type="text" class="form-control" id="trainerFName" name="trainerFName">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="trainerLName">Last Name</label>
+        <input type="text" class="form-control" id="trainerLName" name="trainerLName">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="trainerSpecialty">Specialty</label>
+        <input type="text" class="form-control" id="trainerSpecialty" name="trainerSpecialty">
+      </div>      
+    </div>
 
-    <fieldset>
-      <label for="shelter-id">Add Shelter ID</label>
-      <input type="number" name="shelter-id" placeholder="shelter ID">
-    </fieldset>
-  
-    <input type="submit" name="add trainer" value="Add Trainer" id="add-trainer-submit">
+    <div class="form-group">
+      <label for="trainerShelterID">Add Shelter ID</label>
+      <input type="number" class ="form-control" id="trainerShelterID" name="trainerShelterID">
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="addTrainerBtn">Add Trainer</button>
   </form>
+
+  <hr>
   
   <h3>List of Trainers</h3>
   <table class="table">
@@ -38,4 +51,5 @@
       </tr>
     </tbody>
   </table>
+</div>
 {% endblock content %}
