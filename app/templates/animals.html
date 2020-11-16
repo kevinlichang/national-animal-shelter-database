@@ -1,87 +1,89 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Animals</h1>
+<div class="container-fluid">
+  <h1>Animals</h1>
 
-<form style="border: solid;">
-  <h3>Add Animal</h3>
+  <form class="mb-2">
+    <h3>Add Animal</h3>
+    
+    <input type="text" name="name" placeholder="Name">
+    <input type="text" name="type" placeholder="Type of Animal">
+    <input type="number" name="sheler-id" placeholder="Shelter Location ID">
+    <input type="number" name="cage-id" placeholder="Cage ID">
+    <input type="number" name="trainer-id" placeholder="Trainer ID">
   
-  <input type="text" name="name" placeholder="Name">
-  <input type="text" name="type" placeholder="Type of Animal">
-  <input type="number" name="sheler-id" placeholder="Shelter Location ID">
-  <input type="number" name="cage-id" placeholder="Cage ID">
-  <input type="number" name="trainer-id" placeholder="Trainer ID">
- 
-  <fieldset>
-    <input type="radio" name="sex" id="male-sex" value="1">
-    <label for="male-sex">Male</label>
-    <input type="radio" name="sex" id="female-sex" value="0">
-    <label for="female-sex">Female</label>
-  </fieldset>  
+    <fieldset>
+      <input type="radio" name="sex" id="male-sex" value="1">
+      <label for="male-sex">Male</label>
+      <input type="radio" name="sex" id="female-sex" value="0">
+      <label for="female-sex">Female</label>
+    </fieldset>  
 
-  <input type="number" name="weight" placeholder="Weight in Pounds">
-  <input type="text" name="location-history" placeholder="Location History">
-  <input type="checkbox" name="adopted" id="adopted" value="1">
-  <label for="adopted">Adopted</label>
-  <fieldset>
-    <!-- Fostered Checkbox... Maybe needed later
-    <input type="checkbox" name="fostered" id="fostered" value="1">
-    <label for="fostered">Fostered</label> -->
-    <label for="foster-id">Add Foster Parent ID (optional)</label>
-    <input type="number" name="foster-id" placeholder="Foster Parent ID">
+    <input type="number" name="weight" placeholder="Weight in Pounds">
+    <input type="text" name="location-history" placeholder="Location History">
+    <input type="checkbox" name="adopted" id="adopted" value="1">
+    <label for="adopted">Adopted</label>
+    <fieldset>
+      <!-- Fostered Checkbox... Maybe needed later
+      <input type="checkbox" name="fostered" id="fostered" value="1">
+      <label for="fostered">Fostered</label> -->
+      <label for="foster-id">Add Foster Parent ID (optional)</label>
+      <input type="number" name="foster-id" placeholder="Foster Parent ID">
 
-  </fieldset>
+    </fieldset>
 
-  
-  <input type="text" name="chip-ID" placeholder="Chip ID">
-  <input type="text" name="description" placeholder="Description">
+    
+    <input type="text" name="chip-ID" placeholder="Chip ID">
+    <input type="text" name="description" placeholder="Description">
 
-  <fieldset>
-    <input type="checkbox" name="good-with-dogs" id="good-with-dogs" value="1">
-    <label for="good-with-dogs">Good with dogs</label>
-    <input type="checkbox" name="good-with-cats" id="good-with-cats" value="1">
-    <label for="good-with-cats">Good with cats</label>
-    <input type="checkbox" name="good-with-small-animals" id="good-with-small-animals" value="1">
-    <label for="good-with-small-animals">Good with small animals</label>
-    <input type="checkbox" name="good-with-children" id="good-with-children" value="1">
-    <label for="good-with-children">Good with children</label>
-  </fieldset>
+    <fieldset>
+      <input type="checkbox" name="good-with-dogs" id="good-with-dogs" value="1">
+      <label for="good-with-dogs">Good with dogs</label>
+      <input type="checkbox" name="good-with-cats" id="good-with-cats" value="1">
+      <label for="good-with-cats">Good with cats</label>
+      <input type="checkbox" name="good-with-small-animals" id="good-with-small-animals" value="1">
+      <label for="good-with-small-animals">Good with small animals</label>
+      <input type="checkbox" name="good-with-children" id="good-with-children" value="1">
+      <label for="good-with-children">Good with children</label>
+    </fieldset>
 
-  <input type="submit" name="add animal" value="Add Animal" id="add-animal-submit">
-</form>
+    <input type="submit" name="add animal" value="Add Animal" id="add-animal-submit">
+  </form>
 
-<h3>List of Animals</h3>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Type</th>
-      <th scope="col">Sex</th>
-      <th scope="col">Weight</th>
-      <th scope="col">Location History</th>
-      <th scope="col">Adopted?</th>
-      <th scope="col">Fostered?</th>
-      <th scope="col">Chip ID</th>
-      <th scope="col">Description</th>
-      <th scope="col">Good With:</th>
-      <th scope="col">Update</th>
-      <th scope="col">Delete</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Walter</td>
-      <td>Dog</td>
-      <td>Male</td>
-      <td>30</td>
-      <td></td>
-      <td>N</td>
-      <td>N</td>
-      <td></td>
-      <td>doggy</td>
-      <td></td>
-      <td><button>Update</button></td>
-      <td><button>Delete</button></td>
-    </tr>
-  </tbody>
-</table>
+  <h3>List of Animals</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Sex</th>
+        <th scope="col">Weight</th>
+        <th scope="col">Location History</th>
+        <th scope="col">Adopted?</th>
+        <th scope="col">Fostered?</th>
+        <th scope="col">Chip ID</th>
+        <th scope="col">Description</th>
+        <th scope="col">Good With:</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Walter</td>
+        <td>Dog</td>
+        <td>Male</td>
+        <td>30</td>
+        <td></td>
+        <td>N</td>
+        <td>N</td>
+        <td></td>
+        <td>doggy</td>
+        <td></td>
+        <td><button>Update</button></td>
+        <td><button>Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 {% endblock content %}

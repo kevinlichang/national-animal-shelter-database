@@ -1,30 +1,62 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Fosters</h1>
+<div class="container-fluid">
+  <h1>Fosters</h1>
 
-<form style="border: solid;">
+  <form class="mb-2">
     <h3>Add Foster</h3>
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="fosterFName">First Name</label>
+        <input type="text" class="form-control" id="fosterFName" name="fosterFName">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="fosterLName">Last Name</label>
+        <input type="text" class="form-control" id="fosterLName" name="fosterLName">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="fosterDriverLicense">Driver License Number</label>
+        <input type="text" class="form-control" id="fosterDriverLicense" name="fosterDriverLicense">
+      </div>      
+    </div>
+
+    <div class="form-group">
+      <label for="fosterHistory">Foster History</label>
+      <input type="text" class="form-control" id="fosterHistory" name="fosterHistory">
+    </div>
     
-    <input type="text" name="first_name" placeholder="First Name">
-    <input type="text" name="last_name" placeholder="Last Name">
-    <input type="text" name="license_num" placeholder="Driver's License Number">
-    <input type="text" name="foster_history" placeholder="Foster History">
     <fieldset>
-        <legend>Address</legend>
-        <input type="text" name="address-street" placeholder="Street">
-        <input type="text" name="address-city" placeholder="City">
-        <input type="text" name="address-state" placeholder="State">
-        <input type="text" name="address-zip" placeholder="Zip Code">
+      <div class="form-group">
+        <label for="fosterAddress">Street Address</label>
+        <input type="text" class="form-control" id="fosterAddress" name="fosterAddress">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="fosterCity">City</label>
+          <input type="text" class="form-control" id="fosterCity" name="fosterCity">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="fosterState">State</label>
+          <input type="text" class="form-control" id="fosterState" name="fosterState">
+        </div>
+        <div class="form-group col-md-2">
+          <label for="fosterZip">Zip</label>
+          <input type="text" class="form-control" id="fosterZip" name="fosterZip">
+        </div>
+      </div>
     </fieldset>
 
-    <fieldset>
-      <label for="shelter-id">Add Shelter ID</label>
-      <input type="number" name="shelter-id" placeholder="shelter ID">
-    </fieldset>
-  
-    <input type="submit" name="add foster" value="Add Foster" id="add-foster-submit">
+    <div class="form-group">
+      <label for="fosterShelterID">Add Shelter ID</label>
+      <input type="number" class="form-control" id="fosterShelterID" name="fosterShelterID">
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="addFosterBtn">Add Foster</button>
   </form>
-  
+
+  <hr>
+
   <h3>List of Fosters</h3>
   <table class="table">
     <thead>
@@ -56,4 +88,5 @@
       </tr>
     </tbody>
   </table>
+</div>
 {% endblock content %}
