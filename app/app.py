@@ -9,7 +9,8 @@ def home():
 
 @app.route("/shelters/")
 def shelters():
-    return render_template('shelters.html', title='Shelters')
+
+    return render_template('shelters.html', title='Shelters', allShelters)
 
 @app.route("/animals/")
 def animals():
