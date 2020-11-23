@@ -1,4 +1,5 @@
 from flask import Flask, render_template, url_for
+from backend.dbConnector import connectDB, executeQuery
 
 app = Flask(__name__)
 
@@ -16,7 +17,14 @@ def animals():
 
 @app.route("/cages/")
 def cages():
-    return render_template('cages.html', title='Cages')
+    DBConnect = connectDB()
+
+    #Select all for list
+    query = "SELECT * from cages;"
+    result = executeQuery(DBConnect, query)
+    result.fetchone()
+    print(result)
+    return render_template('cages.html', title='Cages', allCages=result)
 
 @app.route("/fosters/")
 def fosters():

@@ -77,19 +77,23 @@
         <th scope="col">Cage Location in Shelter</th>
         <th scope="col">Cage Name</th>
         <th scope="col">Animal Type</th>
+        <th scope="col">Capacity</th>
         <th scope="col">Update</th>
         <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
+      {% for cage in allCages%}
       <tr>
-        <td>23</td>
-        <td>10</td>
-        <td>cage_name</td>
-        <td>dog</td>
+        <td>{{cage.shelter_id}}</td>
+        <td>{{cage.cage_location}}</td>
+        <td>{{cage.cage_name}}</td>
+        <td>{{cage.animal_type}}</td>
+        <td>{{cage.capacity}}</td>
         <td><button>Update</button></td>
         <td><button>Delete</button></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 
