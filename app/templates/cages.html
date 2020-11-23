@@ -85,11 +85,11 @@
     <tbody>
       {% for cage in allCages%}
       <tr>
-        <td>{{cage.shelter_id}}</td>
-        <td>{{cage.cage_location}}</td>
-        <td>{{cage.cage_name}}</td>
-        <td>{{cage.animal_type}}</td>
-        <td>{{cage.capacity}}</td>
+        <td>{{cage[1]}}</td>
+        <td>{{cage[2]}}</td>
+        <td>{{cage[3]}}</td>
+        <td>{{cage[4]}}</td>
+        <td>{{cage[5]}}</td>
         <td><button>Update</button></td>
         <td><button>Delete</button></td>
       </tr>

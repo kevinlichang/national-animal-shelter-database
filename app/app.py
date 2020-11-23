@@ -21,9 +21,7 @@ def cages():
 
     #Select all for list
     query = "SELECT * from cages;"
-    result = executeQuery(DBConnect, query)
-    result.fetchone()
-    print(result)
+    result = executeQuery(DBConnect, query).fetchall()
     return render_template('cages.html', title='Cages', allCages=result)
 
 @app.route("/fosters/")
