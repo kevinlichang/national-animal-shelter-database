@@ -9,12 +9,21 @@ def home():
 
 @app.route("/shelters/")
 def shelters():
+    DBConnect = connectDB()
 
-    return render_template('shelters.html', title='Shelters', allShelters)
+    #Select all for list
+    query = "SELECT * from shelters;"
+    result = executeQuery(DBConnect, query).fetchall()
+    return render_template('shelters.html', title='Shelters', allShelters=result)
 
 @app.route("/animals/")
 def animals():
-    return render_template('animals.html', title='Animals')
+    DBConnect = connectDB()
+
+    #Select all for list
+    query = "SELECT * from animals;"
+    result = executeQuery(DBConnect, query).fetchall()
+    return render_template('animals.html', title='Animals', allAnimals=result)
 
 @app.route("/cages/")
 def cages():
@@ -27,7 +36,12 @@ def cages():
 
 @app.route("/fosters/")
 def fosters():
-    return render_template('fosters.html', title='Fosters')
+    DBConnect = connectDB()
+
+    #Select all for list
+    query = "SELECT * from fosters;"
+    result = executeQuery(DBConnect, query).fetchall()
+    return render_template('fosters.html', title='Fosters', allFosters=result)
 
 @app.route("/trainers/")
 def trainers():

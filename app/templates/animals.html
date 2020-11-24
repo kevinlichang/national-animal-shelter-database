@@ -108,32 +108,42 @@
     <thead>
       <tr>
         <th scope="col">Name</th>
+        <th scope="col">Location</th>
+        <th scope="col">Cage</th>
+        <th scope="col">Chip ID</th>
         <th scope="col">Type</th>
         <th scope="col">Sex</th>
         <th scope="col">Weight</th>
-        <th scope="col">Location History</th>
-        <th scope="col">Adopted?</th>
-        <th scope="col">Fostered?</th>
-        <th scope="col">Chip ID</th>
         <th scope="col">Description</th>
+        <th scope="col">Location History</th>
+        <th scope="col">Adopted</th>
+        <th scope="col">Fostered</th>
+        <th scope="col">Foster Parent</th>
+        <th scope="col">Available for Adoption</th>
         <th scope="col">Update</th>
         <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
+      {% for animal in allAnimals %}
       <tr>
-        <td>Walter</td>
-        <td>Dog</td>
-        <td>Male</td>
-        <td>30</td>
-        <td></td>
-        <td>N</td>
-        <td>N</td>
-        <td></td>
-        <td>doggy</td>
+        <td>{{animal[1]}}</td>
+        <td>{{animal[2]}}</td>
+        <td>{{animal[3]}}</td>
+        <td>{{animal[4]}}</td>
+        <td>{{animal[5]}}</td>
+        <td>{{animal[6]}}</td>
+        <td>{{animal[7]}}</td>
+        <td>{{animal[8]}}</td>
+        <td>{{animal[9]}}</td>
+        <td>{{animal[10]}}</td>
+        <td>{{animal[11]}}</td>
+        <td>{{animal[12]}}</td>
+        <td>{{animal[13]}}</td>
         <td><button>Update</button></td>
         <td><button>Delete</button></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>

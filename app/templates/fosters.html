@@ -104,18 +104,20 @@
       </tr>
     </thead>
     <tbody>
+      {% for foster in allFosters%}
       <tr>
-        <td>Tom</td>
-        <td>Richards</td>
-        <td>123456</td>
-        <td>123-456-7899</td>
-        <td>123 Street</td>
-        <td>Houston</td>
-        <td>TX</td>
-        <td>77001</td>
+        <td>{{foster[1]}}</td>
+        <td>{{foster[2]}}</td>
+        <td>{{foster[3]}}</td>
+        <td>{{foster[4]}}</td>
+        <td>{{foster[5]}}</td>
+        <td>{{foster[6]}}</td>
+        <td>{{foster[7]}}</td>
+        <td>{{foster[8]}}</td>
         <td><button>Update</button></td>
         <td><button>Delete</button></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
