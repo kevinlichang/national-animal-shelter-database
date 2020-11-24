@@ -31,17 +31,10 @@
 </nav>
 
 <div class="container-fluid">
-<h1>Cages</h1>
-
-<form class="mb-2">
+  <h1>Cages</h1>
+ 
+  <form class="mb-2" id="addCageForm" action="/cages/" method="post">
     <h3>Add Cage</h3>
-    
-    <!-- <input type="number" name="shelterID" placeholder="Shelter ID">
-    <input type="text" name="cage_location" placeholder="Cage Location in Shelter">
-    <input type="text" name="cage_name" placeholder="Cage Name">
-    <input type="text" name="animal_type" placeholder="Animal Type">
-   
-    <input type="submit" name="add cage" value="Add Cage" id="add-cage-submit"> -->
 
     <div class="form-row">
       <div class="form-group col-md-6">
@@ -54,17 +47,20 @@
       </div>
     </div>
     <div class="form-row">
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-5">
         <label for="cageName">Cage Name</label>
         <input type="text" class="form-control" id="cageName" name="cageName">
       </div>
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-5">
         <label for="cageAnimalType">Animal Type</label>
         <input type="text" class="form-control" id="cageAnimalType" name="cageAnimalType">
       </div>
+      <div class="form-group col-md-2">
+        <label for="cageCapacity">Capacity</label>
+        <input type="number" class="form-control" id="cageCapacity" name="cageCapacity">
+      </div>
     </div>
-
-    
+      
     <button type="submit" class="btn btn-primary" id="addCageBtn">Add Cage</button>
     
   </form>
@@ -77,19 +73,23 @@
         <th scope="col">Cage Location in Shelter</th>
         <th scope="col">Cage Name</th>
         <th scope="col">Animal Type</th>
+        <th scope="col">Capacity</th>
         <th scope="col">Update</th>
         <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
+      {% for cage in allCages%}
       <tr>
-        <td>23</td>
-        <td>10</td>
-        <td>cage_name</td>
-        <td>dog</td>
+        <td>{{cage[1]}}</td>
+        <td>{{cage[2]}}</td>
+        <td>{{cage[3]}}</td>
+        <td>{{cage[4]}}</td>
+        <td>{{cage[5]}}</td>
         <td><button>Update</button></td>
         <td><button>Delete</button></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 

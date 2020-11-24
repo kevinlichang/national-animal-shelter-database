@@ -175,21 +175,23 @@
       </tr>
     </thead>
     <tbody>
+      {% for shelter in allShelters %}
       <tr>
-        <td>Shea's Shelter</td>
-        <td>123 Cedar St</td>
-        <td>Houston</td>
-        <td>TX</td>
-        <td>77035</td>
-        <td>50</td>
-        <td>35</td>
-        <td>60</td>
-        <td>20</td>
-        <td>20</td>
-        <td>Y</td>
+        <td>{{shelter[1]}}</td>
+        <td>{{shelter[2]}}</td>
+        <td>{{shelter[3]}}</td>
+        <td>{{shelter[4]}}</td>
+        <td>{{shelter[5]}}</td>
+        <td>{{shelter[6]}}</td>
+        <td>{{shelter[7]}}</td>
+        <td>{{shelter[8]}}</td>
+        <td>{{shelter[9]}}</td>
+        <td>{{shelter[10]}}</td>
+        <td>{{shelter[11]}}</td>
         <td><button>Update</button></td>
         <td><button>Delete</button></td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
