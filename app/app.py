@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from backend.dbConnector import connectDB, executeQuery
 
 app = Flask(__name__)
@@ -33,6 +33,23 @@ def cages():
     query = "SELECT * from cages;"
     result = executeQuery(DBConnect, query).fetchall()
     return render_template('cages.html', title='Cages', allCages=result)
+
+@app.route("/cages/", methods=["POST", "GET"])
+def addNewCage():
+    DBConnect = connectDB()
+
+    # data taken from addCageForm
+    cageShelterID = request.form['cageShelterID']
+    cageLocation = request.form['cageLocation']
+    cageName = request.form['cageName']
+    cageAnimalType = request.form['cageAnimalType']
+    cageCapacity = request.form['cageCapacity']
+
+    # INSERT Query
+    query = "INSERT INTO `cages` (`shelter_id`, `cage_location`, `cage_name`, `animal_type`, `capacity`) VALUES (%s,%s,%s,%s,%s)"
+    data = (cageShelterID, cageLocation, cageName, cageAnimalType, cageCapacity)
+    executeQuery(DBConnect, query, data)
+    return cages()
 
 @app.route("/fosters/")
 def fosters():

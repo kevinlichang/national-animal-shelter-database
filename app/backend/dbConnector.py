@@ -19,10 +19,12 @@ def executeQuery(dbConnection = None, query = None, query_params = ()):
     #create cursor to execute query
     cursor = dbConnection.cursor()
 
+    '''
     #Create tuple of parameters to send with query
     params = tuple()
     for i in query_params:
         params = params + (i)
+    '''
 
     #Commit changes to database
     cursor.execute(query, query_params)
