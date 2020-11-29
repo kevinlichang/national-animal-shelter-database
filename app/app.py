@@ -16,6 +16,33 @@ def shelters():
     result = executeQuery(DBConnect, query).fetchall()
     return render_template('shelters.html', title='Shelters', allShelters=result)
 
+@app.route("/shelters/", methods=["POST", "GET"])
+def addNewShelter():
+    DBConnect = connectDB()
+
+    # data taken from addShelterForm
+    shelterName = request.form['shelterName']
+    shelterAddress = request.form['shelterAddress']
+    shelterCity = request.form['shelterCity']
+    shelterState = request.form['shelterState']
+    shelterZip = request.form['shelterZip']
+    shelterAnimalQuantity = request.form['shelterAnimalQuantity']
+    shelterCageQuantity = request.form['shelterCageQuantity']
+    shelterTotalCageCapacity = request.form['shelterTotalCageCapacity']
+    shelterCurrAmtFosterParents = request.form['shelterCurrAmtFosterParents']
+    shelterCurrAmtAnimalsFostered = request.form['shelterCurrAmtAnimalsFostered']
+    shelterRescureGrp = request.form.get('shelterRescureGrp')
+    if shelterRescureGrp != "1":
+        shelterRescureGrp = "0"
+    print(shelterRescureGrp)
+
+
+    # INSERT Query
+    query = "INSERT INTO `shelters` (`shelter_name`, `address_street`, `address_city`, `address_state`, `address_zip`, `animal_quantity`, `cage_quantity`, `total_cage_capacity`, `current_amt_foster_parents`, `current_amt_animals_fostered`, `rescue_group`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    data = (shelterName, shelterAddress, shelterCity, shelterState, shelterZip, shelterAnimalQuantity, shelterCageQuantity, shelterTotalCageCapacity, shelterCurrAmtFosterParents, shelterCurrAmtAnimalsFostered, shelterRescureGrp)
+    executeQuery(DBConnect, query, data)
+    return shelters()
+
 @app.route("/animals/")
 def animals():
     DBConnect = connectDB()
