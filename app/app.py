@@ -76,7 +76,35 @@ def addNewCage():
     query = "INSERT INTO `cages` (`shelter_id`, `cage_location`, `cage_name`, `animal_type`, `capacity`) VALUES (%s,%s,%s,%s,%s)"
     data = (cageShelterID, cageLocation, cageName, cageAnimalType, cageCapacity)
     executeQuery(DBConnect, query, data)
-    return cages()
+    return redirect("/cages/")
+
+@app.route("/cages/update/<int:id>", methods=["POST"])
+def updateCage(id):
+    DBConnect = connectDB()
+
+    
+    cageShelterID = request.form['cageShelterID']
+    cageLocation = request.form['cageLocation']
+    cageName = request.form['cageName']
+    cageAnimalType = request.form['cageAnimalType']
+    cageCapacity = request.form['cageCapacity']
+
+    print(request.form)
+
+    query = "UPDATE cages SET shelter_id = %s, cage_location = %s, cage_name = %s, animal_type = %s, capacity = %s WHERE cage_id = %s"
+    data = (cageShelterID, cageLocation, cageName, cageAnimalType, cageCapacity, id)
+    result = executeQuery(DBConnect, query, data)
+    return redirect("/cages/")
+
+@app.route("/cages/delete/<int:id>", methods=["POST"])
+def deleteCage(id):
+    DBConnect = connectDB()
+
+    query = "DELETE FROM cages WHERE cage_id = %s"
+    data = (id,)
+    result = executeQuery(DBConnect, query, data)
+    return redirect("/cages/")
+
 
 @app.route("/fosters/")
 def fosters():

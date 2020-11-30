@@ -80,15 +80,18 @@
     </thead>
     <tbody>
       {% for cage in allCages%}
-      <tr>
-        <td>{{cage[1]}}</td>
-        <td>{{cage[2]}}</td>
-        <td>{{cage[3]}}</td>
-        <td>{{cage[4]}}</td>
-        <td>{{cage[5]}}</td>
-        <td><button>Update</button></td>
-        <td><button>Delete</button></td>
-      </tr>
+      <form method="post">
+        <tr>
+          <input type="hidden" name="cage_id" value="{{cage[0]}}">
+          <td><input type="number" class="form-control" name="cageShelterID" value="{{cage[1]}}"></td>
+          <td><input type="text" class="form-control" name="cageLocation" value="{{cage[2]}}"></td>
+          <td><input type="text" class="form-control" name="cageName" value="{{cage[3]}}"></td>
+          <td><input type="text" class="form-control" name="cageAnimalType" value="{{cage[4]}}"></td>
+          <td><input type="number" class="form-control" name="cageCapacity" value="{{cage[5]}}"></td>
+          <td><button type="submit" class="btn btn-primary" formaction="/cages/update/{{cage[0]}}">Update</button></td>
+          <td><button type="submit" class="btn btn-primary" formaction="/cages/delete/{{cage[0]}}">Delete</button></td>
+        </tr>
+      </form>
       {% endfor %}
     </tbody>
   </table>
