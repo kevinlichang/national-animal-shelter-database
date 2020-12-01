@@ -52,6 +52,53 @@ def animals():
     result = executeQuery(DBConnect, query).fetchall()
     return render_template('animals.html', title='Animals', allAnimals=result)
 
+@app.route("/animals/", methods=["POST"])
+def addNewAnimal():
+    DBConnect = connectDB()
+
+    animalName = request.form['animalName']
+    animalType = request.form['animalType'] 
+    animalShelterID = request.form['animalShelterID']
+    animalCageID = request.form['animalCageID']
+    animalSex = request.form['animalSex']
+    animalAdopted = request.form.get('animalAdopted')
+    if animalAdopted != "1":
+        animalAdopted = "0"
+
+    animalWeight = request.form['animalWeight']
+    animalLocationHistory = request.form['animalLocationHistory']
+
+    animalFosterID = request.form['animalFosterID']
+    if animalFosterID == "":
+        animalFosterID = None
+
+    if animalFosterID == None:
+        animalFostered = "0"
+    else:
+        animalFostered = "1"
+
+    animalChipID = request.form['animalChipID']
+    if animalChipID == "":
+        animalChipID = None
+
+    animalDescription = request.form['animalDescription']
+    if animalDescription == "":
+        animalDescription = None
+    
+    if animalAdopted == "1":
+        availableForAdoption = "0"
+    else:
+        availableForAdoption = "1"
+
+    print(animalChipID)
+    print(animalFosterID)
+    print(animalDescription)
+    
+    query = "INSERT INTO `animals`(`name`, `location_shelter`, `location_cage`, `chip_id`, `type`, `sex`, `weight_in_pounds`, `description`, `location_history`, `adopted`, `fostered`, `foster_parent`, `available for adoption`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    data = (animalName, animalShelterID, animalCageID, animalChipID, animalType, animalSex, animalWeight, animalDescription, animalLocationHistory, animalAdopted, animalFostered, animalFosterID, availableForAdoption)
+    executeQuery(DBConnect, query, data)
+    return redirect("/animals/")
+
 @app.route("/cages/")
 def cages():
     DBConnect = connectDB()
