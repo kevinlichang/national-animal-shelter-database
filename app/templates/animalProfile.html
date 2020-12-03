@@ -33,9 +33,177 @@
   <div class="container">
       <div class="jumbotron">
           <h1 class="display-4 text-center">{{animal[1]}}</h1>
-          <p class="lead text-center">Click the name of the animal to see more information.</p>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAnimal">Add Animal</button>
+          <p class="lead text-center">{{animal[4]}}</p>
+          <div class="row">
+
+            <div class="card text-center col-sm">
+                <div class="card-header">Shelter Name</div>
+                <div class="card-body">{{animal[2]}}</div>
+            </div>
+
+            <div class="card text-center col-sm">
+                <div class="card-header">Cage Location</div>
+                <div class="card-body">{{animal[3]}}</div>
+            </div>
+
+            <div class="card text-center col-sm">
+                <div class="card-header">Chip ID</div>
+                <div class="card-body">{{animal[3]}}</div>
+            </div> 
+            
+            <div class="card text-center col-sm">
+                <div class="card-header">Sex</div>
+                {% if animal[4] == 0 %}
+                <div class="card-body">Male</div>
+                {% else %}
+                <div class="card-body">Female</div>
+                {% endif %}
+            </div>
+          </div>
+        <div class="row">
+
+            <div class="card text-center col-sm">
+                <div class="card-header">Weight</div>
+                <div class="card-body">{{animal[7]}} Lbs</div>
+            </div>
+
+            <div class="card text-center col-sm">
+                <div class="card-header">Available for Adoption</div>
+                {% if animal[4] == 0 %}
+                <div class="card-body">No</div>
+                {% else %}
+                <div class="card-body">Yes</div>
+                {% endif %}
+            </div>
+
+            <div class="card text-center col-sm">
+                <div class="card-header">Fostered</div>
+                {% if animal[4] == 0 %}
+                <div class="card-body">No</div>
+            </div>
+                {% else %}
+                <div class="card-body">Yes</div>
+            </div>
+
+            <div class="card text-center col-sm">
+                <div class="card-header">Foster Parent</div>
+                {% if animal[9] == 0 %}
+                <div class="card-body">None</div>
+                {% else %}
+                <div class="card-body">{{animal[11]}} {{animal[12]}}</div>
+                {% endif %}
+            </div>
+            {% endif %}
       </div>
-      <h1>Meow</h1>
-  </div>
+            <div class="row">
+                <div class="card text-center col-sm">
+                    <div class="card-header">Description</div>
+                    <div class="card-body">{{animal[8]}}</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="card text-center col-sm">
+                    <div class="card-header">Trainers</div>
+                    <div class="card-body">
+                        {% for train in trainerList%}
+                            {{train[0]}} {{train[1]}}
+                        {% endfor%}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateAnimal">Update</button>
+          <button type="button" class="btn btn-primary" data-target="#deleteAnimal">Delete</button>
+      </div>
+      
+      <div class="modal fade" id="updateAnimal" tableindex="-1" role="dialog" aria-labelledby="updateAnimalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAnimalTitle">Update Animal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                  <form class="mb-2" id="updateAnimalForm" action="/animalsProfile/" method="post">                  
+                      <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label for="animalName">Name</label>
+                          <input type="text" class="form-control" id="animalName" name="animalName">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="animalType">Type</label>
+                          <input type="text" class="form-control" id="animalType" name="animalType">
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label for="animalShelterID">Shelter ID</label>
+                          <input type="number" class="form-control" id="animalShelterID" name="animalShelterID">
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label for="animalCageID">Cage ID</label>
+                          <input type="number" class="form-control" id="animalCageID" name="animalCageID">
+                        </div>      
+                      </div>
+                      
+                      <div class="form-row">
+                        <div class="form-group col-auto">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="animalSex" id="animalMale" value="0">
+                            <label class="form-check-label" for="animalMale">Male</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="animalSex" id="animalFemale" value="1">
+                            <label class="form-check-label" for="animalFemale">Female</label>
+                          </div>
+                        </div>
+                        <div class="form-group col-auto">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="animalAdopted" value="1">
+                            <label class="form-check-label" for="animalAdopted">Adopted</label>
+                          </div>
+                        </div>    
+                      </div>
+                  
+                      <div class="form-row">
+                        <div class="form-group col-md-2">
+                          <label for="animalWeight">Weight in Pounds</label>
+                          <input type="number" class="form-control" id="animalWeight" name="animalWeight">
+                        </div>
+                        <div class="form-group col">
+                          <label for="animalLocationHistory">Location History</label>
+                          <input type="text" class="form-control" id="animalLocationHistory" name="animalLocationHistory">
+                        </div>      
+                      </div>
+                  
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <label for="animalFosterID">Add Foster ID (optional)</label>
+                          <input type="number" class="form-control" id="animalFosterID" name="animalFosterID">
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label for="animalChipID">Chip ID</label>
+                          <input type="text" class="form-control" id="animalChipID" name="animalChipID">
+                        </div>
+                        <div class="form-group col">
+                          <label for="animalDescription">Description</label>
+                          <input type="text" class="form-control" id="animalDescription" name="animalDescription">
+                        </div> 
+                      </div>
+                      
+                      
+                    
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" id="updateAnimalBtn">Update Animal</button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+    
+</div>
+    
 {% endblock content %}

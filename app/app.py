@@ -101,7 +101,14 @@ def addNewAnimal():
 
 @app.route('/animalProfile/<animalId>')
 def animalProfile(animalId):
-    return render_template('animalProfile.html', title='Animals Profile', animal=animalId)
+    DBConnect = connectDB()
+    query = "SELECT animal_id, name, shelter_name, cage_name, chip_id, type, sex, weight_in_pounds, description, fostered, `available for adoption` FROM animals INNER JOIN shelters ON animals.location_shelter = shelters.shelter_id INNER JOIN cages ON animals.location_cage = cages.cage_id WHERE animal_id = %s;", (animalId)
+    resultAll = executeQuery(DBConnect, query, animalId).fetchall()
+
+
+    query = "SELECT first_name, last_name FROM animals_trainers INNER JOIN trainers ON animals_trainers.trainer_id = trainers.trainer_id WHERE animals_trainers.animal_id = %s;"
+    resultTrainer = executeQuery(DBConnect, query).fetchall()
+    return render_template('animalProfile.html', title='Animals Profile', animal=animalId, trainerList=resultTrainer)
 
 @app.route("/cages/")
 def cages():
