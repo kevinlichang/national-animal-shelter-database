@@ -48,7 +48,7 @@ def animals():
     DBConnect = connectDB()
 
     #Select all for list
-    query = "SELECT * from animals;"
+    query = "SELECT animal_id, name, type, shelter_name, shelters.address_city, shelters.address_state FROM `animals` INNER JOIN `shelters` ON animals.location_shelter = shelters.shelter_id;"
     result = executeQuery(DBConnect, query).fetchall()
     return render_template('animals.html', title='Animals', allAnimals=result)
 
@@ -98,6 +98,10 @@ def addNewAnimal():
     data = (animalName, animalShelterID, animalCageID, animalChipID, animalType, animalSex, animalWeight, animalDescription, animalLocationHistory, animalAdopted, animalFostered, animalFosterID, availableForAdoption)
     executeQuery(DBConnect, query, data)
     return redirect("/animals/")
+
+@app.route('/animalProfile/<animalId>')
+def animalProfile(animalId):
+    return render_template('animalProfile.html', title='Animals Profile', animal=animalId)
 
 @app.route("/cages/")
 def cages():
