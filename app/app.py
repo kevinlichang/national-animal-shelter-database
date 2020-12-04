@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
 from backend.dbConnector import connectDB, executeQuery
 
 app = Flask(__name__)
@@ -66,7 +66,6 @@ def addNewAnimal():
         animalAdopted = "0"
 
     animalWeight = request.form['animalWeight']
-    animalLocationHistory = request.form['animalLocationHistory']
 
     animalFosterID = request.form['animalFosterID']
     if animalFosterID == "":
@@ -94,10 +93,10 @@ def addNewAnimal():
     print(animalFosterID)
     print(animalDescription)
     
-    query = "INSERT INTO `animals`(`name`, `location_shelter`, `location_cage`, `chip_id`, `type`, `sex`, `weight_in_pounds`, `description`, `location_history`, `adopted`, `fostered`, `foster_parent`, `available for adoption`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    data = (animalName, animalShelterID, animalCageID, animalChipID, animalType, animalSex, animalWeight, animalDescription, animalLocationHistory, animalAdopted, animalFostered, animalFosterID, availableForAdoption)
+    query = "INSERT INTO `animals`(`name`, `location_shelter`, `location_cage`, `chip_id`, `type`, `sex`, `weight_in_pounds`, `description`, `adopted`, `fostered`, `foster_parent`, `available for adoption`) VALUES (%s, %s, %s, %s, %s,  %s, %s, %s, %s, %s, %s, %s)"
+    data = (animalName, animalShelterID, animalCageID, animalChipID, animalType, animalSex, animalWeight, animalDescription, animalAdopted, animalFostered, animalFosterID, availableForAdoption)
     executeQuery(DBConnect, query, data)
-    return redirect("/animals/")
+    return redirect('/animals/')
 
 @app.route('/animalProfile/<int:animalId>')
 def animalProfile(animalId):

@@ -50,19 +50,19 @@
                         <div class="form-row">
                           <div class="form-group col-md-4">
                             <label for="animalName">Name</label>
-                            <input type="text" class="form-control" id="animalName" name="animalName">
+                            <input type="text" class="form-control" id="animalName" name="animalName" required>
                           </div>
                           <div class="form-group col-md-4">
                             <label for="animalType">Type</label>
-                            <input type="text" class="form-control" id="animalType" name="animalType">
+                            <input type="text" class="form-control" id="animalType" name="animalType" required>
                           </div>
                           <div class="form-group col-md-2">
                             <label for="animalShelterID">Shelter ID</label>
-                            <input type="number" class="form-control" id="animalShelterID" name="animalShelterID">
+                            <input type="number" class="form-control" id="animalShelterID" name="animalShelterID" required>
                           </div>
                           <div class="form-group col-md-2">
                             <label for="animalCageID">Cage ID</label>
-                            <input type="number" class="form-control" id="animalCageID" name="animalCageID">
+                            <input type="number" class="form-control" id="animalCageID" name="animalCageID" required>
                           </div>      
                         </div>
                         
@@ -87,13 +87,9 @@
                     
                         <div class="form-row">
                           <div class="form-group col-md-2">
-                            <label for="animalWeight">Weight in Pounds</label>
+                            <label for="animalWeight">Weight in Lbs</label>
                             <input type="number" class="form-control" id="animalWeight" name="animalWeight">
-                          </div>
-                          <div class="form-group col">
-                            <label for="animalLocationHistory">Location History</label>
-                            <input type="text" class="form-control" id="animalLocationHistory" name="animalLocationHistory">
-                          </div>      
+                          </div>     
                         </div>
                     
                         <div class="form-row">
@@ -134,7 +130,7 @@
             {% for animal in allAnimals %}
                 <tr>
                     <td>
-                        <a href="/animalProfile/<{{animal[0]}}>">{{animal[1]}}</a>
+                        <a href="/animalProfile/{{animal[0]}}">{{animal[1]}}</a>
                     </td>
                     <td>{{animal[2]}}</td>
                     <td>{{animal[3]}}</td>
