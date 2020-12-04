@@ -123,10 +123,14 @@ def animalProfile(animalId):
 def cages():
     DBConnect = connectDB()
 
+    #Select shelter info for dropdown to input FK
+    sheltersQuery = "SELECT shelter_id, shelter_name from shelters"
+    sheltersResult = executeQuery(DBConnect, sheltersQuery).fetchall()
+
     #Select all for list
     query = "SELECT cage_id, shelter_name, cage_location, cage_name, animal_type, capacity FROM `cages` INNER JOIN `shelters` ON cages.shelter_id = shelters.shelter_id;"
     result = executeQuery(DBConnect, query).fetchall()
-    return render_template('cages.html', title='Cages', allCages=result)
+    return render_template('cages.html', title='Cages', allCages=result, shelterData=sheltersResult)
 
 @app.route("/cages/", methods=["POST", "GET"])
 def addNewCage():
