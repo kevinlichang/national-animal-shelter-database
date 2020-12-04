@@ -33,7 +33,7 @@
   <div class="container">
       <div class="jumbotron">
           <h1 class="display-4 text-center">{{animal[1]}}</h1>
-          <p class="lead text-center">{{animal[4]}}</p>
+          <p class="h1 text-center">{{animal[5]}}</p>
           <div class="row">
 
             <div class="card text-center col-sm">
@@ -48,12 +48,12 @@
 
             <div class="card text-center col-sm">
                 <div class="card-header">Chip ID</div>
-                <div class="card-body">{{animal[3]}}</div>
+                <div class="card-body">{{animal[4]}}</div>
             </div> 
             
             <div class="card text-center col-sm">
                 <div class="card-header">Sex</div>
-                {% if animal[4] == 0 %}
+                {% if animal[6] == 0 %}
                 <div class="card-body">Male</div>
                 {% else %}
                 <div class="card-body">Female</div>
@@ -69,7 +69,7 @@
 
             <div class="card text-center col-sm">
                 <div class="card-header">Available for Adoption</div>
-                {% if animal[4] == 0 %}
+                {% if animal[10] == 0 %}
                 <div class="card-body">No</div>
                 {% else %}
                 <div class="card-body">Yes</div>
@@ -78,7 +78,7 @@
 
             <div class="card text-center col-sm">
                 <div class="card-header">Fostered</div>
-                {% if animal[4] == 0 %}
+                {% if animal[9] == 0 %}
                 <div class="card-body">No</div>
             </div>
                 {% else %}
@@ -90,7 +90,7 @@
                 {% if animal[9] == 0 %}
                 <div class="card-body">None</div>
                 {% else %}
-                <div class="card-body">{{animal[11]}} {{animal[12]}}</div>
+                <div class="card-body">{{foster[0]}} {{foster[1]}}</div>
                 {% endif %}
             </div>
             {% endif %}
@@ -105,9 +105,9 @@
             <div class="row">
                 <div class="card text-center col-sm">
                     <div class="card-header">Trainers</div>
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         {% for train in trainerList%}
-                            {{train[0]}} {{train[1]}}
+                            <p class="text-center">{{train[0]}} {{train[1]}}</p>
                         {% endfor%}
                     </div>
                 </div>

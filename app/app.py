@@ -99,16 +99,26 @@ def addNewAnimal():
     executeQuery(DBConnect, query, data)
     return redirect("/animals/")
 
-@app.route('/animalProfile/<animalId>')
+@app.route('/animalProfile/<int:animalId>')
 def animalProfile(animalId):
     DBConnect = connectDB()
-    query = "SELECT animal_id, name, shelter_name, cage_name, chip_id, type, sex, weight_in_pounds, description, fostered, `available for adoption` FROM animals INNER JOIN shelters ON animals.location_shelter = shelters.shelter_id INNER JOIN cages ON animals.location_cage = cages.cage_id WHERE animal_id = %s;", (animalId)
-    resultAll = executeQuery(DBConnect, query, animalId).fetchall()
+    query = "SELECT animal_id, name, shelter_name, cage_name, chip_id, type, sex, weight_in_pounds, description, fostered, `available for adoption`, foster_parent FROM animals INNER JOIN shelters ON animals.location_shelter = shelters.shelter_id INNER JOIN cages ON animals.location_cage = cages.cage_id WHERE animal_id = %s;"
+    data = str(animalId)
+    data = (data,)
+    resultAll = executeQuery(DBConnect, query, data).fetchall()
+    fosterResult = (0,0)
 
+    if resultAll[0][9] == 1:
+        query = "SELECT first_name, last_name FROM `fosters` WHERE foster_id = %s;"
+        fosterData = str(resultAll[0][11])
+        fosterData = (fosterData,)
+        fosterResult = executeQuery(DBConnect, query, fosterData).fetchall()
+        
 
     query = "SELECT first_name, last_name FROM animals_trainers INNER JOIN trainers ON animals_trainers.trainer_id = trainers.trainer_id WHERE animals_trainers.animal_id = %s;"
-    resultTrainer = executeQuery(DBConnect, query).fetchall()
-    return render_template('animalProfile.html', title='Animals Profile', animal=animalId, trainerList=resultTrainer)
+    resultTrainer = executeQuery(DBConnect, query, data).fetchall()
+
+    return render_template('animalProfile.html', title='Animals Profile', animal=resultAll[0], foster=fosterResult[0], trainerList=resultTrainer)
 
 @app.route("/cages/")
 def cages():
