@@ -1,150 +1,144 @@
 {% extends "layout.html" %}
 {% block content %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">NASD</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <a class="navbar-brand" href="/">NASD</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/shelters/">Shelters</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/animals/">Animals</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/fosters/">Fosters</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/cages/">Cages</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/trainers/">Trainers</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/shelters/">Shelters</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="/animals/">Animals</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/fosters/">Fosters</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/cages/">Cages</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/trainers/">Trainers</a>
-      </li>
-    </ul>
+  <div class="container">
+      <div class="jumbotron">
+          <h1 class="display-4 text-center">Animals</h1>
+          <p class="lead text-center">Click the name of the animal to see more information.</p>
+          <button type="button" class="btn btn-primary align-middle" data-toggle="modal" data-target="#addAnimal">Add Animal</button>
+      </div>
+      <div class="modal fade" id="addAnimal" tableindex="-1" role="dialog" aria-labelledby="addAnimalTitle" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="addAnimalTitle">Add Animal</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                    <form class="mb-2" id="addAnimalForm" action="/animals/" method="post">                  
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label for="animalName">Name</label>
+                            <input type="text" class="form-control" id="animalName" name="animalName" required>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="animalType">Type</label>
+                            <input type="text" class="form-control" id="animalType" name="animalType" required>
+                          </div>
+                          <div class="form-group col-md-2">
+                            <label for="animalShelterID">Shelter ID</label>
+                            <input type="number" class="form-control" id="animalShelterID" name="animalShelterID" required>
+                          </div>
+                          <div class="form-group col-md-2">
+                            <label for="animalCageID">Cage ID</label>
+                            <input type="number" class="form-control" id="animalCageID" name="animalCageID" required>
+                          </div>      
+                        </div>
+                        
+                        <div class="form-row">
+                          <div class="form-group col-auto">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="animalSex" id="animalMale" value="0">
+                              <label class="form-check-label" for="animalMale">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="animalSex" id="animalFemale" value="1">
+                              <label class="form-check-label" for="animalFemale">Female</label>
+                            </div>
+                          </div>
+                          <div class="form-group col-auto">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="animalAdopted" value="1">
+                              <label class="form-check-label" for="animalAdopted">Adopted</label>
+                            </div>
+                          </div>    
+                        </div>
+                    
+                        <div class="form-row">
+                          <div class="form-group col-md-2">
+                            <label for="animalWeight">Weight in Lbs</label>
+                            <input type="number" class="form-control" id="animalWeight" name="animalWeight">
+                          </div>     
+                        </div>
+                    
+                        <div class="form-row">
+                          <div class="form-group col-md-3">
+                            <label for="animalFosterID">Add Foster ID (optional)</label>
+                            <input type="number" class="form-control" id="animalFosterID" name="animalFosterID">
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label for="animalChipID">Chip ID</label>
+                            <input type="text" class="form-control" id="animalChipID" name="animalChipID">
+                          </div>
+                          <div class="form-group col">
+                            <label for="animalDescription">Description</label>
+                            <input type="text" class="form-control" id="animalDescription" name="animalDescription">
+                          </div> 
+                        </div>
+                      
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="addAnimalBtn">Add Animal</button>
+                  </div>
+                </form>
+              </div>
+          </div>
+      </div>
+      </div>
+      <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Species</th>
+                <th scope="col">Shelter</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for animal in allAnimals %}
+                <tr>
+                    <td>
+                        <a href="/animalProfile/{{animal[0]}}">{{animal[1]}}</a>
+                    </td>
+                    <td>{{animal[2]}}</td>
+                    <td>{{animal[3]}}</td>
+                    <td>{{animal[4]}}</td>
+                    <td>{{animal[5]}}</td>
+                </tr>
+            {% endfor %}
+          </tbody>
+      </table>
   </div>
-</nav>
-
-<div class="container-fluid">
-  <h1>Animals</h1>
-
-  <form class="mb-2" id="addAnimalForm" action="/animals/" method="post">
-    <h3>Add Animal</h3>
-
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="animalName">Name</label>
-        <input type="text" class="form-control" id="animalName" name="animalName">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="animalType">Type</label>
-        <input type="text" class="form-control" id="animalType" name="animalType">
-      </div>
-      <div class="form-group col-md-2">
-        <label for="animalShelterID">Shelter ID</label>
-        <input type="number" class="form-control" id="animalShelterID" name="animalShelterID">
-      </div>
-      <div class="form-group col-md-2">
-        <label for="animalCageID">Cage ID</label>
-        <input type="number" class="form-control" id="animalCageID" name="animalCageID">
-      </div>      
-    </div>
-    
-    <div class="form-row">
-      <div class="form-group col-auto">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="animalSex" id="animalMale" value="0">
-          <label class="form-check-label" for="animalMale">Male</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="animalSex" id="animalFemale" value="1">
-          <label class="form-check-label" for="animalFemale">Female</label>
-        </div>
-      </div>
-      <div class="form-group col-auto">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="animalAdopted" value="1">
-          <label class="form-check-label" for="animalAdopted">Adopted</label>
-        </div>
-      </div>    
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-2">
-        <label for="animalWeight">Weight in Pounds</label>
-        <input type="number" class="form-control" id="animalWeight" name="animalWeight">
-      </div>
-      <div class="form-group col">
-        <label for="animalLocationHistory">Location History</label>
-        <input type="text" class="form-control" id="animalLocationHistory" name="animalLocationHistory">
-      </div>      
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label for="animalFosterID">Add Foster ID (optional)</label>
-        <input type="number" class="form-control" id="animalFosterID" name="animalFosterID">
-      </div>
-      <div class="form-group col-md-3">
-        <label for="animalChipID">Chip ID</label>
-        <input type="text" class="form-control" id="animalChipID" name="animalChipID">
-      </div>
-      <div class="form-group col">
-        <label for="animalDescription">Description</label>
-        <input type="text" class="form-control" id="animalDescription" name="animalDescription">
-      </div> 
-    </div>
-    
-    <button type="submit" class="btn btn-primary" id="addAnimalBtn">Add Animal</button>
-  </form>
-
-  <h3>List of Animals</h3>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Location</th>
-        <th scope="col">Cage</th>
-        <th scope="col">Chip ID</th>
-        <th scope="col">Type</th>
-        <th scope="col">Sex</th>
-        <th scope="col">Weight</th>
-        <th scope="col">Description</th>
-        <th scope="col">Location History</th>
-        <th scope="col">Adopted</th>
-        <th scope="col">Fostered</th>
-        <th scope="col">Foster Parent</th>
-        <th scope="col">Available for Adoption</th>
-        <th scope="col">Update</th>
-        <th scope="col">Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for animal in allAnimals %}
-      <tr>
-        <td>{{animal[1]}}</td>
-        <td>{{animal[2]}}</td>
-        <td>{{animal[3]}}</td>
-        <td>{{animal[4]}}</td>
-        <td>{{animal[5]}}</td>
-        <td>{{animal[6]}}</td>
-        <td>{{animal[7]}}</td>
-        <td>{{animal[8]}}</td>
-        <td>{{animal[9]}}</td>
-        <td>{{animal[10]}}</td>
-        <td>{{animal[11]}}</td>
-        <td>{{animal[12]}}</td>
-        <td>{{animal[13]}}</td>
-        <td><button>Update</button></td>
-        <td><button>Delete</button></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
 {% endblock content %}

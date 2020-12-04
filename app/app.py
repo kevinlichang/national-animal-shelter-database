@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
 from backend.dbConnector import connectDB, executeQuery
 
 app = Flask(__name__)
@@ -48,7 +48,7 @@ def animals():
     DBConnect = connectDB()
 
     #Select all for list
-    query = "SELECT * from animals;"
+    query = "SELECT animal_id, name, type, shelter_name, shelters.address_city, shelters.address_state FROM `animals` INNER JOIN `shelters` ON animals.location_shelter = shelters.shelter_id;"
     result = executeQuery(DBConnect, query).fetchall()
     return render_template('animals.html', title='Animals', allAnimals=result)
 
@@ -66,7 +66,6 @@ def addNewAnimal():
         animalAdopted = "0"
 
     animalWeight = request.form['animalWeight']
-    animalLocationHistory = request.form['animalLocationHistory']
 
     animalFosterID = request.form['animalFosterID']
     if animalFosterID == "":
@@ -94,10 +93,31 @@ def addNewAnimal():
     print(animalFosterID)
     print(animalDescription)
     
-    query = "INSERT INTO `animals`(`name`, `location_shelter`, `location_cage`, `chip_id`, `type`, `sex`, `weight_in_pounds`, `description`, `location_history`, `adopted`, `fostered`, `foster_parent`, `available for adoption`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    data = (animalName, animalShelterID, animalCageID, animalChipID, animalType, animalSex, animalWeight, animalDescription, animalLocationHistory, animalAdopted, animalFostered, animalFosterID, availableForAdoption)
+    query = "INSERT INTO `animals`(`name`, `location_shelter`, `location_cage`, `chip_id`, `type`, `sex`, `weight_in_pounds`, `description`, `adopted`, `fostered`, `foster_parent`, `available for adoption`) VALUES (%s, %s, %s, %s, %s,  %s, %s, %s, %s, %s, %s, %s)"
+    data = (animalName, animalShelterID, animalCageID, animalChipID, animalType, animalSex, animalWeight, animalDescription, animalAdopted, animalFostered, animalFosterID, availableForAdoption)
     executeQuery(DBConnect, query, data)
-    return redirect("/animals/")
+    return redirect('/animals/')
+
+@app.route('/animalProfile/<int:animalId>')
+def animalProfile(animalId):
+    DBConnect = connectDB()
+    query = "SELECT animal_id, name, shelter_name, cage_name, chip_id, type, sex, weight_in_pounds, description, fostered, `available for adoption`, foster_parent FROM animals INNER JOIN shelters ON animals.location_shelter = shelters.shelter_id INNER JOIN cages ON animals.location_cage = cages.cage_id WHERE animal_id = %s;"
+    data = str(animalId)
+    data = (data,)
+    resultAll = executeQuery(DBConnect, query, data).fetchall()
+    fosterResult = (0,0)
+
+    if resultAll[0][9] == 1:
+        query = "SELECT first_name, last_name FROM `fosters` WHERE foster_id = %s;"
+        fosterData = str(resultAll[0][11])
+        fosterData = (fosterData,)
+        fosterResult = executeQuery(DBConnect, query, fosterData).fetchall()
+        
+
+    query = "SELECT first_name, last_name FROM animals_trainers INNER JOIN trainers ON animals_trainers.trainer_id = trainers.trainer_id WHERE animals_trainers.animal_id = %s;"
+    resultTrainer = executeQuery(DBConnect, query, data).fetchall()
+
+    return render_template('animalProfile.html', title='Animals Profile', animal=resultAll[0], foster=fosterResult[0], trainerList=resultTrainer)
 
 @app.route("/cages/")
 def cages():
