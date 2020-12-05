@@ -43,7 +43,7 @@
 
             <div class="card text-center col-sm">
                 <div class="card-header">Cage Location</div>
-                <div class="card-body">{{animal[3]}}</div>
+                <div class="card-body">{{cageCurrent}}</div>
             </div>
 
             <div class="card text-center col-sm">
@@ -148,7 +148,8 @@
                 </div>
                 <div class="modal-body">
                   <form class="mb-2" id="updateAnimalForm" action="/animalsProfile/" method="post">                  
-                      <div class="form-row">
+                      
+                    <div class="form-row">
                         <div class="form-group col-md-4">
                           <label for="animalName">Name</label>
                           <input type="text" class="form-control" id="animalName" name="animalName" value="{{animal[1]}}">
@@ -169,17 +170,28 @@
                               {% endfor %}
                             </select>
                           </div>
-                        </div> 
-                        <div class="form-group col-md-4">
-                          <label for="animalCageID">Cage ID</label>
-                          <input type="text" class="form-control" id="animalCageID" name="animalCageID" value="{{animal[3]}}">
-                        </div> 
+                        </div>
+                      </div>
+                    
+                      <div class="form-row">
                         <div class="form-group col-md-2">
                           <label for="animalWeight">Weight in Lbs</label>
-                          <input type="number" class="form-control" id="animalWeight" name="animalWeight" value="{{animal[7]}}">
+                          <input type="number" class="form-control" id="animalWeight" name="animalWeight" value="{{animal[7]}}" required>
+                        </div> 
+                        <div class="form-group col-md-4">
+                          <div class="form-group">
+                            <label for="animalCageID">Cage</label>
+                            <select type="number" name="animalCageID" class="form-control" id="animalCageID" required>
+                              <option value="{{animal[3]}}" selected>{{cageCurrent}}</option>
+                              {% for cage in cagesList %}
+                                {% if cage[1] != animal[3] %}
+                                  <option value="{{cage[1]}}" >{{cage[0]}}</option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
                         </div> 
                       </div>
-                      
+                      </div>
                       <div class="form-row">
                         <div class="form-group col-auto">
                           <div class="form-check form-check-inline">
@@ -238,8 +250,7 @@
                           <label for="animalDescription">Description</label>
                           <input type="text" class="form-control" id="animalDescription" name="animalDescription" value="{{animal[8]}}">
                         </div> 
-                      </div>
-                      
+                      </div>                     
                       
                     
                 <div class="modal-footer">

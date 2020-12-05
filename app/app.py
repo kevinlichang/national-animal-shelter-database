@@ -91,7 +91,7 @@ def addNewAnimal():
 @app.route('/animalProfile/<int:animalId>')
 def animalProfile(animalId):
     DBConnect = connectDB()
-    query = "SELECT animal_id, name, shelter_name, location_cage, chip_id, type, sex, weight_in_pounds, description, foster_parent, `available for adoption`, animals.location_shelter FROM animals INNER JOIN shelters ON animals.location_shelter = shelters.shelter_id INNER JOIN cages ON animals.location_cage = cages.cage_id WHERE animal_id = %s;"
+    query = "SELECT animal_id, name, shelter_name, location_cage, chip_id, type, sex, weight_in_pounds, description, foster_parent, `available for adoption`, animals.location_shelter FROM animals INNER JOIN shelters ON animals.location_shelter = shelters.shelter_id WHERE animal_id = %s;"
     strdata = str(animalId)
     data = (strdata,)
     resultAll = executeQuery(DBConnect, query, data).fetchall()
@@ -121,7 +121,21 @@ def animalProfile(animalId):
     query = "SELECT shelters.shelter_name, shelters.shelter_id FROM shelters ORDER BY shelters.shelter_name;"
     sheltersList = executeQuery(DBConnect, query).fetchall()
 
-    return render_template('animalProfile.html', title='Animals Profile', allShelters=sheltersList, animal=resultAll[0], foster=fosterResult[0], fosterOptions=fosterList, trainerList=resultTrainer, trainerOptions=possible_trainers)
+    #handle for null cage value
+    if resultAll[0][3] == None:
+        currentCage = ("None",)
+    else:
+        query = "SELECT cage_name FROM cages WHERE cage_id = %s"
+        data = (resultAll[0][3],)
+        currentCage = executeQuery(DBConnect, query, data).fetchall()
+    
+    query = "SELECT cage_name, cage_id FROM cages WHERE shelter_id = %s AND animal_type = %s"
+    data = (resultAll[0][11], resultAll[0][5],)
+    allCages = executeQuery(DBConnect, query, data).fetchall()
+
+    print(allCages)
+
+    return render_template('animalProfile.html', title='Animals Profile', cageCurrent=currentCage[0][0], cagesList=allCages, allShelters=sheltersList, animal=resultAll[0], foster=fosterResult[0], fosterOptions=fosterList, trainerList=resultTrainer, trainerOptions=possible_trainers)
 
 @app.route("/cages/")
 def cages():
