@@ -50,7 +50,11 @@ def animals():
     #Select all for list
     query = "SELECT animal_id, name, type, shelter_name, shelters.address_city, shelters.address_state FROM `animals` INNER JOIN `shelters` ON animals.location_shelter = shelters.shelter_id;"
     result = executeQuery(DBConnect, query).fetchall()
-    return render_template('animals.html', title='Animals', allAnimals=result)
+
+    query = "SELECT shelters.shelter_name, shelters.shelter_id FROM shelters ORDER BY shelters.shelter_name;"
+    sheltersList = executeQuery(DBConnect, query).fetchall()
+
+    return render_template('animals.html', title='Animals', allAnimals=result, allShelters=sheltersList)
 
 @app.route("/animals/", methods=["POST"])
 def addNewAnimal():
@@ -59,22 +63,12 @@ def addNewAnimal():
     animalName = request.form['animalName']
     animalType = request.form['animalType'] 
     animalShelterID = request.form['animalShelterID']
-    animalCageID = request.form['animalCageID']
     animalSex = request.form['animalSex']
     animalAdopted = request.form.get('animalAdopted')
     if animalAdopted != "1":
         animalAdopted = "0"
 
     animalWeight = request.form['animalWeight']
-
-    animalFosterID = request.form['animalFosterID']
-    if animalFosterID == "":
-        animalFosterID = None
-
-    if animalFosterID == None:
-        animalFostered = "0"
-    else:
-        animalFostered = "1"
 
     animalChipID = request.form['animalChipID']
     if animalChipID == "":
@@ -89,24 +83,20 @@ def addNewAnimal():
     else:
         availableForAdoption = "1"
 
-    print(animalChipID)
-    print(animalFosterID)
-    print(animalDescription)
-    
-    query = "INSERT INTO `animals`(`name`, `location_shelter`, `location_cage`, `chip_id`, `type`, `sex`, `weight_in_pounds`, `description`, `adopted`, `fostered`, `foster_parent`, `available for adoption`) VALUES (%s, %s, %s, %s, %s,  %s, %s, %s, %s, %s, %s, %s)"
-    data = (animalName, animalShelterID, animalCageID, animalChipID, animalType, animalSex, animalWeight, animalDescription, animalAdopted, animalFostered, animalFosterID, availableForAdoption)
+    query = "INSERT INTO `animals`(`name`, `location_shelter`, `chip_id`, `type`, `sex`, `weight_in_pounds`, `description`, `adopted`, `available for adoption`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    data = (animalName, animalShelterID, animalChipID, animalType, animalSex, animalWeight, animalDescription, animalAdopted, availableForAdoption)
     executeQuery(DBConnect, query, data)
     return redirect('/animals/')
 
 @app.route('/animalProfile/<int:animalId>')
 def animalProfile(animalId):
     DBConnect = connectDB()
-    query = "SELECT animal_id, name, shelter_name, cage_name, chip_id, type, sex, weight_in_pounds, description, foster_parent, `available for adoption`, animals.location_shelter FROM animals INNER JOIN shelters ON animals.location_shelter = shelters.shelter_id INNER JOIN cages ON animals.location_cage = cages.cage_id WHERE animal_id = %s;"
+    query = "SELECT animal_id, name, shelter_name, location_cage, chip_id, type, sex, weight_in_pounds, description, foster_parent, `available for adoption`, animals.location_shelter FROM animals INNER JOIN shelters ON animals.location_shelter = shelters.shelter_id WHERE animal_id = %s;"
     strdata = str(animalId)
     data = (strdata,)
     resultAll = executeQuery(DBConnect, query, data).fetchall()
     fosterResult = (0,0,0)
-    fosterList = (0,0,0)
+    fosterList = (None,)
     possible_trainers = (0,0,0)
 
     query = "SELECT trainers.first_name, trainers.last_name, trainers.trainer_id FROM `shelters_trainers` INNER JOIN `trainers` ON shelters_trainers.trainer_id = trainers.trainer_id INNER JOIN animals_trainers ON trainers.trainer_id = animals_trainers.trainer_id WHERE trainers.animal_specialty = %s AND shelters_trainers.shelter_id = %s AND NOT animals_trainers.animal_id = %s"
@@ -120,18 +110,32 @@ def animalProfile(animalId):
         fosterData = str(resultAll[0][9])
         fosterData = (fosterData,)
         fosterResult = executeQuery(DBConnect, query, fosterData).fetchall()
-    else:
-        query = "SELECT fosters.first_name, fosters.last_name, fosters.foster_id FROM shelters_fosters INNER JOIN fosters ON shelters_fosters.foster_id = fosters.foster_id WHERE shelter_id = %s"
-        fosterData = (query_ShelterId,)
-        fosterList = executeQuery(DBConnect, query, fosterData).fetchall()
 
+    query = "SELECT fosters.first_name, fosters.last_name, fosters.foster_id FROM shelters_fosters INNER JOIN fosters ON shelters_fosters.foster_id = fosters.foster_id WHERE shelter_id = %s"
+    fosterData = (query_ShelterId,)
+    fosterList = executeQuery(DBConnect, query, fosterData).fetchall()
 
     query = "SELECT first_name, last_name, trainers.trainer_id FROM animals_trainers INNER JOIN trainers ON animals_trainers.trainer_id = trainers.trainer_id WHERE animals_trainers.animal_id = %s;"
     resultTrainer = executeQuery(DBConnect, query, data).fetchall()
 
+    query = "SELECT shelters.shelter_name, shelters.shelter_id FROM shelters ORDER BY shelters.shelter_name;"
+    sheltersList = executeQuery(DBConnect, query).fetchall()
 
+    #handle for null cage value
+    if resultAll[0][3] == None:
+        currentCage = ("None",)
+    else:
+        query = "SELECT cage_name FROM cages WHERE cage_id = %s"
+        data = (resultAll[0][3],)
+        currentCage = executeQuery(DBConnect, query, data).fetchall()
+    
+    query = "SELECT cage_name, cage_id FROM cages WHERE shelter_id = %s AND animal_type = %s"
+    data = (resultAll[0][11], resultAll[0][5],)
+    allCages = executeQuery(DBConnect, query, data).fetchall()
 
-    return render_template('animalProfile.html', title='Animals Profile', animal=resultAll[0], foster=fosterResult[0], fosterOptions=fosterList, trainerList=resultTrainer, trainerOptions=possible_trainers)
+    print(allCages)
+
+    return render_template('animalProfile.html', title='Animals Profile', cageCurrent=currentCage[0][0], cagesList=allCages, allShelters=sheltersList, animal=resultAll[0], foster=fosterResult[0], fosterOptions=fosterList, trainerList=resultTrainer, trainerOptions=possible_trainers)
 
 @app.route("/cages/")
 def cages():

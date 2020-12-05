@@ -56,20 +56,22 @@
                             <label for="animalType">Type</label>
                             <input type="text" class="form-control" id="animalType" name="animalType" required>
                           </div>
-                          <div class="form-group col-md-2">
-                            <label for="animalShelterID">Shelter ID</label>
-                            <input type="number" class="form-control" id="animalShelterID" name="animalShelterID" required>
-                          </div>
-                          <div class="form-group col-md-2">
-                            <label for="animalCageID">Cage ID</label>
-                            <input type="number" class="form-control" id="animalCageID" name="animalCageID" required>
+                          <div class="form-group col-md-4">
+                            <div class="form-group">
+                              <label for="animalShelterID">Shelter</label>
+                              <select type="number" name="animalShelterID" class="form-control" id="animalShelterID" required>
+                                {% for shelter in allShelters%}
+                                  <option value="{{shelter[1]}}">{{shelter[0]}}</option>
+                                {% endfor %}
+                              </select>
+                            </div>
                           </div>      
                         </div>
                         
                         <div class="form-row">
                           <div class="form-group col-auto">
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="animalSex" id="animalMale" value="0">
+                              <input class="form-check-input" type="radio" name="animalSex" id="animalMale" value="0" checked>
                               <label class="form-check-label" for="animalMale">Male</label>
                             </div>
                             <div class="form-check form-check-inline">
@@ -90,10 +92,6 @@
                         </div>
                     
                         <div class="form-row">
-                          <div class="form-group col-md-3">
-                            <label for="animalFosterID">Add Foster ID (optional)</label>
-                            <input type="number" class="form-control" id="animalFosterID" name="animalFosterID">
-                          </div>
                           <div class="form-group col-md-3">
                             <label for="animalChipID">Chip ID</label>
                             <input type="text" class="form-control" id="animalChipID" name="animalChipID">
