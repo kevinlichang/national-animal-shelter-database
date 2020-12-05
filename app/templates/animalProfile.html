@@ -78,7 +78,7 @@
 
             <div class="card text-center col-sm">
                 <div class="card-header">Fostered</div>
-                {% if animal[9] == 0 %}
+                {% if animal[9] == None %}
                 <div class="card-body">No</div>
             </div>
                 {% else %}
@@ -87,23 +87,8 @@
 
             <div class="card text-center col-sm">
                 <div class="card-header">Foster Parent</div>
-                {% if animal[9] == None %}
-                <div class="card-body">
-                  <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="fosterDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Add Foster Parent</button>
-                  
-                    <div class="dropdown-menu"  aria-labelledby="fosterDropdownMenuButton">
-                      {% for fosterOpt in fosterOptions%}
-                      <a class="dropdown-item" href="/animalProfile/addFoster?foster={{fosterOpt[2]}}&animal={{animal[0]}}">{{fosterOpt[0]}} {{fosterOpt[1]}}</a>
-                      {% endfor%}
-                    </div>
-                  </div>
-                </div>
-                {% else %}
                 <div class="card-body">
                   <a href="/fosterProfile/{{foster[2]}}">{{foster[0]}} {{foster[1]}}</a></div>
-                {% endif %}
             </div>
             {% endif %}
       </div>
@@ -126,9 +111,9 @@
                         <div class="dropdown">
                           <button class="btn btn-secondary dropdown-toggle" type="button" id="trainersDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Trainers</button>
                           <div class="dropdown-menu" aria-labelledby="trainersDropdownMenuButton">
-                            {% for trainOpt in trainerOptions %}
+                              {% for trainOpt in trainerOptions %}
                               <a class="dropdown-item" href="/animalProfile/addTrainer?animal={{animal[0]}}&trainer={{trainOpt[2]}}">{{trainOpt[0]}} {{trainOpt[1]}}</a>
-                            {% endfor %}
+                              {% endfor %}
                           </div>
                         </div>
                         
@@ -155,16 +140,24 @@
                       <div class="form-row">
                         <div class="form-group col-md-4">
                           <label for="animalName">Name</label>
-                          <input type="text" class="form-control" id="animalName" name="animalName" value={{animal[1]}}>
+                          <input type="text" class="form-control" id="animalName" name="animalName" value="{{animal[1]}}">
                         </div>
                         <div class="form-group col-md-4">
                           <label for="animalType">Type</label>
-                          <input type="text" class="form-control" id="animalType" name="animalType" value={{animal[5]}}>
+                          <input type="text" class="form-control" id="animalType" name="animalType" value="{{animal[5]}}">
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-4">
+                          <label for="animalCageID">Shelter</label>
+                          <input type="text" class="form-control" id="shelterName" name="shelterName" value="{{animal[2]}}">
+                        </div>
+                        <div class="form-group col-md-4">
                           <label for="animalCageID">Cage ID</label>
-                          <input type="number" class="form-control" id="animalCageID" name="animalCageID" value={{animal[3]}}>
-                        </div>      
+                          <input type="text" class="form-control" id="animalCageID" name="animalCageID" value="{{animal[3]}}">
+                        </div> 
+                        <div class="form-group col-md-2">
+                          <label for="animalWeight">Weight in Lbs</label>
+                          <input type="number" class="form-control" id="animalWeight" name="animalWeight" value="{{animal[7]}}">
+                        </div> 
                       </div>
                       
                       <div class="form-row">
@@ -195,25 +188,25 @@
                             {% endif %}
                             <label class="form-check-label" for="animalAdopted">Adopted</label>
                           </div>
-                        </div>    
-                        <div class="form-group col-md-2">
-                          <label for="animalWeight">Weight in Lbs</label>
-                          <input type="number" class="form-control" id="animalWeight" name="animalWeight" value={{animal[7]}}>
-                        </div>      
-                      </div>
-                  
-                      <div class="form-row">
-                        <div class="form-group col-md-3">
-                          <label for="animalFosterID">Add Foster ID (optional)</label>
-                          <input type="number" class="form-control" id="animalFosterID" name="animalFosterID" value=>
                         </div>
                         <div class="form-group col-md-3">
+                          <label for="fosterParent">Foster Parent: </label>
+                          <select id="fosterParent" name="fosterParent">
+                            <option value="None">None</option>
+                            {% for fosterOpt in fosterOptions%}
+                              <option value="{{fosterOpt2}}">{{fosterOpt[0]}} {{fosterOpt[1]}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>          
+                      </div>                
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
                           <label for="animalChipID">Chip ID</label>
-                          <input type="text" class="form-control" id="animalChipID" name="animalChipID">
+                          <input type="text" class="form-control" id="animalChipID" name="animalChipID" value="{{animal[4]}}">
                         </div>
                         <div class="form-group col">
                           <label for="animalDescription">Description</label>
-                          <input type="text" class="form-control" id="animalDescription" name="animalDescription">
+                          <input type="text" class="form-control" id="animalDescription" name="animalDescription" value="{{animal[8]}}">
                         </div> 
                       </div>
                       
