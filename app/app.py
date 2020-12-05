@@ -128,7 +128,7 @@ def cages():
     sheltersResult = executeQuery(DBConnect, sheltersQuery).fetchall()
 
     #Select all for list
-    query = "SELECT cage_id, shelter_name, cage_location, cage_name, animal_type, capacity FROM `cages` INNER JOIN `shelters` ON cages.shelter_id = shelters.shelter_id;"
+    query = "SELECT cage_id, shelter_name, cage_location, cage_name, animal_type, capacity, cages.shelter_id FROM `cages` INNER JOIN `shelters` ON cages.shelter_id = shelters.shelter_id;"
     result = executeQuery(DBConnect, query).fetchall()
     return render_template('cages.html', title='Cages', allCages=result, shelterData=sheltersResult)
 

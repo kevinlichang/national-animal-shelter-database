@@ -30,7 +30,7 @@
   </div>
 </nav>
 
-<div class="container-fluid">
+<div class="container">
   <h1>Cages</h1>
  
   <form class="mb-2" id="addCageForm" action="/cages/" method="post">
@@ -71,32 +71,85 @@
   </form>
   <hr>
   <h3>List of Cages</h3>
-  <table class="table">
-    <thead>
+  <table class="table table-hover">
+    <thead class="thead-dark">
       <tr>
         <th scope="col">Shelter</th>
         <th scope="col">Cage Location in Shelter</th>
         <th scope="col">Cage Name</th>
         <th scope="col">Animal Type</th>
         <th scope="col">Capacity</th>
-        <th scope="col">Update</th>
-        <th scope="col">Delete</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
       {% for cage in allCages%}
-      <form method="post">
-        <tr>
-          <input type="hidden" name="cage_id" value="{{cage[0]}}">
-          <td><input type="text" class="form-control" name="cageShelterID" value="{{cage[1]}}"></td>
-          <td><input type="text" class="form-control" name="cageLocation" value="{{cage[2]}}"></td>
-          <td><input type="text" class="form-control" name="cageName" value="{{cage[3]}}"></td>
-          <td><input type="text" class="form-control" name="cageAnimalType" value="{{cage[4]}}"></td>
-          <td><input type="number" class="form-control" name="cageCapacity" value="{{cage[5]}}"></td>
-          <td><button type="submit" class="btn btn-primary" formaction="/cages/update/{{cage[0]}}">Update</button></td>
-          <td><button type="submit" class="btn btn-primary" formaction="/cages/delete/{{cage[0]}}">Delete</button></td>
-        </tr>
-      </form>
+      <!-- Display Results in table -->
+      <tr>
+        <td>{{cage[1]}}</td>
+        <td>{{cage[2]}}</td>
+        <td>{{cage[3]}}</td>
+        <td>{{cage[4]}}</td>
+        <td>{{cage[5]}}</td>
+        <td><button class="btn btn-outline-success" data-toggle="modal" data-target="#updateModal-{{cage[0]}}">Update/Delete</button></td>
+      </tr> 
+
+      <!-- Modal for Update or Delete -->
+      <div class="modal fade" id="updateModal-{{cage[0]}}" tabindex="-1" aria-labelledby="updateModalLabel-{{cage[0]}}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateModalLabel-{{cage[0]}}">Update Cage</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>              
+            <form method="post">
+              <div class="modal-body">
+                
+                <input type="hidden" name="cage_id" value="{{cage[0]}}">
+
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label for="cageShelterID">Shelter Names</label>
+                    <select name="cageShelterID" class="custom-select">
+                      <option value="{{cage[6]}}" selected>{{cage[1]}}</option>
+                      {% for shelter in shelterData%}
+                        <option value="{{shelter[0]}}"> {{shelter[1]}} </option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col">
+                    <label for="cageLocation">Cage Location in Shelter</label>
+                    <input type="text" class="form-control" name="cageLocation" value="{{cage[2]}}">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    <label for="cageName">Cage Name</label>
+                    <input type="text" class="form-control" name="cageName" value="{{cage[3]}}">
+                  </div>
+                  <div class="form-group col-md-5">
+                    <label for="cageAnimalType">Animal Type</label>
+                    <input type="text" class="form-control" name="cageAnimalType" value="{{cage[4]}}">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="cageCapacity">Capacity</label>
+                    <input type="number" class="form-control" name="cageCapacity" value="{{cage[5]}}">  
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" formaction="/cages/update/{{cage[0]}}">Save Update</button>
+                <button type="submit" class="btn btn-danger" formaction="/cages/delete/{{cage[0]}}">Delete Cage</button>   
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
       {% endfor %}
     </tbody>
   </table>
