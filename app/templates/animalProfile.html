@@ -108,20 +108,31 @@
                               <a href="/trainerProfile/{{train[2]}}"> {{train[0]}} {{train[1]}} </a>
                             </p>
                         {% endfor%}
-                        <div class="dropdown">
-                          <button class="btn btn-secondary dropdown-toggle" type="button" id="trainersDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Trainers</button>
-                          <div class="dropdown-menu" aria-labelledby="trainersDropdownMenuButton">
-                              {% for trainOpt in trainerOptions %}
-                              <a class="dropdown-item" href="/animalProfile/addTrainer?animal={{animal[0]}}&trainer={{trainOpt[2]}}">{{trainOpt[0]}} {{trainOpt[1]}}</a>
-                              {% endfor %}
-                          </div>
-                        </div>
-                        
                     </div>
+                    <div class="form-group">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="addTrainerDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Trainer</button>
+                        <div class="dropdown-menu" aria-labelledby="addTrainerDropdownMenuButton">
+                            {% for trainOpt in trainerOptions %}
+                            <a class="dropdown-item" href="/animalProfile/addTrainer?animal={{animal[0]}}&trainer={{trainOpt[2]}}">{{trainOpt[0]}} {{trainOpt[1]}}</a>
+                            {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="removeTrainerDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Remove Trainer</button>
+                        <div class="dropdown-menu" aria-labelledby="removeTrainerDropdownMenuButton">
+                            {% for train in trainerList %}
+                            <a class="dropdown-item" href="/animalProfile/removeTrainer?animal={{animal[0]}}&trainer={{train[2]}}">{{train[0]}} {{train[1]}}</a>
+                            {% endfor %}
+                        </div>
+                      </div>
+                    </div>       
                 </div>
             </div>
             <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#updateAnimal">Update</button>
-            <button type="button" class="btn btn-primary mt-3" data-target="#deleteAnimal">Delete</button>
+            <button type="button" class="btn btn-danger mt-3" data-target="#deleteAnimal">Delete</button>
         </div>
 
       </div>
@@ -147,9 +158,18 @@
                           <input type="text" class="form-control" id="animalType" name="animalType" value="{{animal[5]}}">
                         </div>
                         <div class="form-group col-md-4">
-                          <label for="animalCageID">Shelter</label>
-                          <input type="text" class="form-control" id="shelterName" name="shelterName" value="{{animal[2]}}">
-                        </div>
+                          <div class="form-group">
+                            <label for="animalShelterID">Shelter</label>
+                            <select type="number" name="animalShelterID" class="form-control" id="animalShelterID" required>
+                              <option value="{{animal[11]}}" selected>{{animal[2]}}</option>
+                              {% for shelter in allShelters%}
+                                {% if shelter[1] != animal[11]%}
+                                  <option value="{{shelter[1]}}">{{shelter[0]}}</option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div> 
                         <div class="form-group col-md-4">
                           <label for="animalCageID">Cage ID</label>
                           <input type="text" class="form-control" id="animalCageID" name="animalCageID" value="{{animal[3]}}">
@@ -164,17 +184,17 @@
                         <div class="form-group col-auto">
                           <div class="form-check form-check-inline">
                             {% if animal[6] == 0 %}
-                            <input class="form-check-input" type="radio" name="animalSex" id="animalMale" value="0" checked>
+                              <input class="form-check-input" type="radio" name="animalSex" id="animalMale" value="0" checked>
                             {% else %}
-                            <input class="form-check-input" type="radio" name="animalSex" id="animalMale" value="0">
+                              <input class="form-check-input" type="radio" name="animalSex" id="animalMale" value="0">
                             {% endif %}
-                            <label class="form-check-label" for="animalMale">Male</label>
+                              <label class="form-check-label" for="animalMale">Male</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            {% if animal[7] == 1%}
-                            <input class="form-check-input" type="radio" name="animalSex" id="animalFemale" value="1" checked>
+                            {% if animal[6] == 1%}
+                              <input class="form-check-input" type="radio" name="animalSex" id="animalFemale" value="1" checked>
                             {% else %}
-                            <input class="form-check-input" type="radio" name="animalSex" id="animalFemale" value="1">
+                              <input class="form-check-input" type="radio" name="animalSex" id="animalFemale" value="1">
                             {% endif %}
                             <label class="form-check-label" for="animalFemale">Female</label>
                           </div>
@@ -190,20 +210,30 @@
                           </div>
                         </div>
                         <div class="form-group col-md-3">
-                          <label for="fosterParent">Foster Parent: </label>
-                          <select id="fosterParent" name="fosterParent">
-                            <option value="None">None</option>
-                            {% for fosterOpt in fosterOptions%}
-                              <option value="{{fosterOpt2}}">{{fosterOpt[0]}} {{fosterOpt[1]}}</option>
-                            {% endfor %}
-                          </select>
-                        </div>          
-                      </div>                
-                      <div class="form-row">
+                          <div class="form-group">
+                            <label for="fosterParent">Foster Parent</label>
+                            <select type="number" name="fosterParent" class="form-control" id="fosterParent" required>
+                              {% if foster[0] == None %}
+                                <option value="None" selected>None</option>
+                              {% else %}
+                                <option value="{{animal[9]}}" selected>{{foster[0]}} {{foster[1]}}</option>
+                              {% endif %}
+                                <option value="None" selected>None</option>
+                              {% for fosterOpt in fosterOptions%}
+                                {% if fosterOpt[1] != foster[2]%}
+                                  <option value="{{fosterOpt[2]}}">{{foster[0]}} {{foster[1]}}</option>
+                                {% endif %}
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
                         <div class="form-group col-md-3">
                           <label for="animalChipID">Chip ID</label>
                           <input type="text" class="form-control" id="animalChipID" name="animalChipID" value="{{animal[4]}}">
                         </div>
+                      </div>                
+                      <div class="form-row">
+
                         <div class="form-group col">
                           <label for="animalDescription">Description</label>
                           <input type="text" class="form-control" id="animalDescription" name="animalDescription" value="{{animal[8]}}">
