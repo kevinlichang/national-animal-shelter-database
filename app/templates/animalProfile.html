@@ -87,10 +87,22 @@
 
             <div class="card text-center col-sm">
                 <div class="card-header">Foster Parent</div>
-                {% if animal[9] == 0 %}
-                <div class="card-body">None</div>
+                {% if animal[9] == None %}
+                <div class="card-body">
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="fosterDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Add Foster Parent</button>
+                  
+                    <div class="dropdown-menu"  aria-labelledby="fosterDropdownMenuButton">
+                      {% for fosterOpt in fosterOptions%}
+                      <a class="dropdown-item" href="/animalProfile/addFoster?foster={{fosterOpt[2]}}&animal={{animal[0]}}">{{fosterOpt[0]}} {{fosterOpt[1]}}</a>
+                      {% endfor%}
+                    </div>
+                  </div>
+                </div>
                 {% else %}
-                <div class="card-body">{{foster[0]}} {{foster[1]}}</div>
+                <div class="card-body">
+                  <a href="/fosterProfile/{{foster[2]}}">{{foster[0]}} {{foster[1]}}</a></div>
                 {% endif %}
             </div>
             {% endif %}
@@ -107,16 +119,26 @@
                     <div class="card-header">Trainers</div>
                     <div class="card-body text-center">
                         {% for train in trainerList%}
-                            <p class="text-center">{{train[0]}} {{train[1]}}</p>
+                            <p class="text-center">
+                              <a href="/trainerProfile/{{train[2]}}"> {{train[0]}} {{train[1]}} </a>
+                            </p>
                         {% endfor%}
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAnimalTrainer">Add Trainers</button>
+                        <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="trainersDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Trainers</button>
+                          <div class="dropdown-menu" aria-labelledby="trainersDropdownMenuButton">
+                            {% for trainOpt in trainerOptions %}
+                              <a class="dropdown-item" href="/animalProfile/addTrainer?animal={{animal[0]}}&trainer={{trainOpt[2]}}">{{trainOpt[0]}} {{trainOpt[1]}}</a>
+                            {% endfor %}
+                          </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
-
+            <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#updateAnimal">Update</button>
+            <button type="button" class="btn btn-primary mt-3" data-target="#deleteAnimal">Delete</button>
         </div>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateAnimal">Update</button>
-          <button type="button" class="btn btn-primary" data-target="#deleteAnimal">Delete</button>
+
       </div>
       
       <div class="modal fade" id="updateAnimal" tableindex="-1" role="dialog" aria-labelledby="updateAnimalTitle" aria-hidden="true">
@@ -133,56 +155,57 @@
                       <div class="form-row">
                         <div class="form-group col-md-4">
                           <label for="animalName">Name</label>
-                          <input type="text" class="form-control" id="animalName" name="animalName">
+                          <input type="text" class="form-control" id="animalName" name="animalName" value={{animal[1]}}>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="animalType">Type</label>
-                          <input type="text" class="form-control" id="animalType" name="animalType">
-                        </div>
-                        <div class="form-group col-md-2">
-                          <label for="animalShelterID">Shelter ID</label>
-                          <input type="number" class="form-control" id="animalShelterID" name="animalShelterID">
+                          <input type="text" class="form-control" id="animalType" name="animalType" value={{animal[5]}}>
                         </div>
                         <div class="form-group col-md-2">
                           <label for="animalCageID">Cage ID</label>
-                          <input type="number" class="form-control" id="animalCageID" name="animalCageID">
+                          <input type="number" class="form-control" id="animalCageID" name="animalCageID" value={{animal[3]}}>
                         </div>      
                       </div>
                       
                       <div class="form-row">
                         <div class="form-group col-auto">
                           <div class="form-check form-check-inline">
+                            {% if animal[6] == 0 %}
+                            <input class="form-check-input" type="radio" name="animalSex" id="animalMale" value="0" checked>
+                            {% else %}
                             <input class="form-check-input" type="radio" name="animalSex" id="animalMale" value="0">
+                            {% endif %}
                             <label class="form-check-label" for="animalMale">Male</label>
                           </div>
                           <div class="form-check form-check-inline">
+                            {% if animal[7] == 1%}
+                            <input class="form-check-input" type="radio" name="animalSex" id="animalFemale" value="1" checked>
+                            {% else %}
                             <input class="form-check-input" type="radio" name="animalSex" id="animalFemale" value="1">
+                            {% endif %}
                             <label class="form-check-label" for="animalFemale">Female</label>
                           </div>
                         </div>
                         <div class="form-group col-auto">
                           <div class="form-check form-check-inline">
+                            {% if animal[10] %}
+                            <input class="form-check-input" type="checkbox" id="animalAdopted" value="1" checked>
+                            {% else %}
                             <input class="form-check-input" type="checkbox" id="animalAdopted" value="1">
+                            {% endif %}
                             <label class="form-check-label" for="animalAdopted">Adopted</label>
                           </div>
                         </div>    
-                      </div>
-                  
-                      <div class="form-row">
                         <div class="form-group col-md-2">
-                          <label for="animalWeight">Weight in Pounds</label>
-                          <input type="number" class="form-control" id="animalWeight" name="animalWeight">
-                        </div>
-                        <div class="form-group col">
-                          <label for="animalLocationHistory">Location History</label>
-                          <input type="text" class="form-control" id="animalLocationHistory" name="animalLocationHistory">
+                          <label for="animalWeight">Weight in Lbs</label>
+                          <input type="number" class="form-control" id="animalWeight" name="animalWeight" value={{animal[7]}}>
                         </div>      
                       </div>
                   
                       <div class="form-row">
                         <div class="form-group col-md-3">
                           <label for="animalFosterID">Add Foster ID (optional)</label>
-                          <input type="number" class="form-control" id="animalFosterID" name="animalFosterID">
+                          <input type="number" class="form-control" id="animalFosterID" name="animalFosterID" value=>
                         </div>
                         <div class="form-group col-md-3">
                           <label for="animalChipID">Chip ID</label>
