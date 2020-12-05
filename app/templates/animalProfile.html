@@ -152,11 +152,11 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                           <label for="animalName">Name</label>
-                          <input type="text" class="form-control" id="animalName" name="animalName" value="{{animal[1]}}">
+                          <input type="text" class="form-control" id="animalName" name="animalName" value="{{animal[1]}}" required>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="animalType">Type</label>
-                          <input type="text" class="form-control" id="animalType" name="animalType" value="{{animal[5]}}">
+                          <input type="text" class="form-control" id="animalType" name="animalType" value="{{animal[5]}}" required>
                         </div>
                         <div class="form-group col-md-4">
                           <div class="form-group">
@@ -225,15 +225,16 @@
                           <div class="form-group">
                             <label for="fosterParent">Foster Parent</label>
                             <select type="number" name="fosterParent" class="form-control" id="fosterParent" required>
-                              {% if foster[0] == None %}
+                              {% if foster[2] == "None" %}
                                 <option value="None" selected>None</option>
                               {% else %}
                                 <option value="{{animal[9]}}" selected>{{foster[0]}} {{foster[1]}}</option>
+                                <option value="None">None</option>
                               {% endif %}
-                                <option value="None" selected>None</option>
+                                
                               {% for fosterOpt in fosterOptions%}
                                 {% if fosterOpt[1] != foster[2]%}
-                                  <option value="{{fosterOpt[2]}}">{{foster[0]}} {{foster[1]}}</option>
+                                  <option value="{{fosterOpt[2]}}">{{fosterOpt[0]}} {{fosterOpt[1]}}</option>
                                 {% endif %}
                               {% endfor %}
                             </select>
@@ -241,14 +242,14 @@
                         </div>
                         <div class="form-group col-md-3">
                           <label for="animalChipID">Chip ID</label>
-                          <input type="text" class="form-control" id="animalChipID" name="animalChipID" value="{{animal[4]}}">
+                          <input type="text" class="form-control" id="animalChipID" name="animalChipID" value="{{animal[4]}}" required>
                         </div>
                       </div>                
                       <div class="form-row">
 
                         <div class="form-group col">
                           <label for="animalDescription">Description</label>
-                          <input type="text" class="form-control" id="animalDescription" name="animalDescription" value="{{animal[8]}}">
+                          <input type="text" class="form-control" id="animalDescription" name="animalDescription" value="{{animal[8]}}" required>
                         </div> 
                       </div>                     
                       

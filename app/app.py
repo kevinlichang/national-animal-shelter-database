@@ -110,6 +110,8 @@ def animalProfile(animalId):
         fosterData = str(resultAll[0][9])
         fosterData = (fosterData,)
         fosterResult = executeQuery(DBConnect, query, fosterData).fetchall()
+    else:
+        fosterResult = (("Not", "Fostered", "None"),)
 
     query = "SELECT fosters.first_name, fosters.last_name, fosters.foster_id FROM shelters_fosters INNER JOIN fosters ON shelters_fosters.foster_id = fosters.foster_id WHERE shelter_id = %s"
     fosterData = (query_ShelterId,)
