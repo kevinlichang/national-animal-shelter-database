@@ -125,17 +125,15 @@ def animalProfile(animalId):
 
     #handle for null cage value
     if resultAll[0][3] == None:
-        currentCage = ("None",)
+        currentCage = (("None",),)
     else:
         query = "SELECT cage_name FROM cages WHERE cage_id = %s"
         data = (resultAll[0][3],)
         currentCage = executeQuery(DBConnect, query, data).fetchall()
-    
+    print(currentCage)
     query = "SELECT cage_name, cage_id FROM cages WHERE shelter_id = %s AND animal_type = %s"
     data = (resultAll[0][11], resultAll[0][5],)
     allCages = executeQuery(DBConnect, query, data).fetchall()
-
-    print(allCages)
 
     return render_template('animalProfile.html', title='Animals Profile', cageCurrent=currentCage[0][0], cagesList=allCages, allShelters=sheltersList, animal=resultAll[0], foster=fosterResult[0], fosterOptions=fosterList, trainerList=resultTrainer, trainerOptions=possible_trainers)
 

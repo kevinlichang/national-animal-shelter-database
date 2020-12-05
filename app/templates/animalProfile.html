@@ -42,7 +42,7 @@
             </div>
 
             <div class="card text-center col-sm">
-                <div class="card-header">Cage Location</div>
+                <div class="card-header">Cage Name</div>
                 <div class="card-body">{{cageCurrent}}</div>
             </div>
 
@@ -156,7 +156,15 @@
                         </div>
                         <div class="form-group col-md-4">
                           <label for="animalType">Type</label>
-                          <input type="text" class="form-control" id="animalType" name="animalType" value="{{animal[5]}}" required>
+                          <select type="text" name="animalType" class="form-control" id="animalType" required>
+                            <option value="{{animal[5]}}" selected>{{animal[5]}}</option>
+                            {% if animal[5] != "Dog"%}
+                              <option value="Dog">Dog</option>
+                            {% endif %}
+                            {% if animal[5] != "Cat"%}
+                              <option value="Cat">Cat</option>
+                            {% endif %}                          
+                          </select>
                         </div>
                         <div class="form-group col-md-4">
                           <div class="form-group">
@@ -180,7 +188,7 @@
                         </div> 
                         <div class="form-group col-md-4">
                           <div class="form-group">
-                            <label for="animalCageID">Cage</label>
+                            <label for="animalCageID">Available Cage</label>
                             <select type="number" name="animalCageID" class="form-control" id="animalCageID" required>
                               <option value="{{animal[3]}}" selected>{{cageCurrent}}</option>
                               {% for cage in cagesList %}
@@ -213,12 +221,12 @@
                         </div>
                         <div class="form-group col-auto">
                           <div class="form-check form-check-inline">
-                            {% if animal[10] %}
-                            <input class="form-check-input" type="checkbox" id="animalAdopted" value="1" checked>
+                            {% if animal[10] == 1%}
+                            <input class="form-check-input" type="checkbox" id="animalAdoptAvailable" value="0" checked="1">
                             {% else %}
-                            <input class="form-check-input" type="checkbox" id="animalAdopted" value="1">
+                            <input class="form-check-input" type="checkbox" id="animalAdoptAvailable" value="0" checked="1">
                             {% endif %}
-                            <label class="form-check-label" for="animalAdopted">Adopted</label>
+                            <label class="form-check-label" for="animalAdoptAvailable">Available for Adoption</label>
                           </div>
                         </div>
                         <div class="form-group col-md-3">
