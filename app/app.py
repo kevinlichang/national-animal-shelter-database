@@ -224,7 +224,7 @@ def cages():
     DBConnect = connectDB()
 
     #Select shelter info for dropdown to input FK
-    sheltersQuery = "SELECT shelter_id, shelter_name from shelters"
+    sheltersQuery = "SELECT shelter_id, shelter_name FROM shelters ORDER BY shelter_name;"
     sheltersResult = executeQuery(DBConnect, sheltersQuery).fetchall()
 
     #Select all for list
