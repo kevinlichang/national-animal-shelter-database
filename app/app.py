@@ -16,6 +16,22 @@ def shelters():
     result = executeQuery(DBConnect, query).fetchall()
     return render_template('shelters.html', title='Shelters', allShelters=result)
 
+
+# Search Shelter by State
+@app.route("/shelters/", methods=["POST"])
+def searchSheltersByState():
+    DBConnect = connectDB()
+
+    stateSelected = request.form['shelterStateSearch']
+
+    #Select shelters by state
+    query = "SELECT * from shelters WHERE address_state = %s;"
+    data = (stateSelected,)
+    result = executeQuery(DBConnect, query, data)
+    return render_template('shelters.html', title='Shelters', allShelters=result)
+
+
+# Add new Shelter
 @app.route("/shelters/", methods=["POST", "GET"])
 def addNewShelter():
     DBConnect = connectDB()
