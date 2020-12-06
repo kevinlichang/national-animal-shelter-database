@@ -94,12 +94,22 @@
     
     <div class="form-row">
       <div class="form-group col-md-4">
-        <label for="shelterTrainerID">Add Trainer ID</label>
-        <input type="number" class="form-control" id="shelterTrainerID" name="shelterTrainerID">
+        <label for="shelterTrainerID">Add Trainer at this shelter</label>
+        <select name="shelterTrainerID" id="shelterTrainerID" class="custom-select">
+          <option selected>--Choose Trainer--</option>
+          {% for trainer in trainersData%}
+            <option value="{{trainer[0]}}"> {{trainer[1]}}, {{trainer[2]}} </option>
+          {% endfor %}
+        </select>
       </div>
       <div class="form-group col-md-4">
         <label for="shelterFosterID">Add Foster Parent ID (optional)</label>
-        <input type="number" class="form-control" id="shelterFosterID" name="shelterFosterID">
+        <select name="shelterFosterID" id="shelterFosterID" class="custom-select">
+          <option value=" " selected>--Choose Foster (optional)--</option>
+          {% for foster in fostersData%}
+            <option value="{{foster[0]}}"> {{foster[1]}}, {{foster[2]}} </option>
+          {% endfor %}
+        </select>
       </div>
     </div>
 
@@ -108,6 +118,7 @@
 
   <hr>
 
+  <!-- Search/Filter form-->
   <form class="mb-2" id="searchByStateForm" action="/shelters/state" method="post">
     <h3>Filter by State</h3>
 

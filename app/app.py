@@ -19,10 +19,18 @@ def home():
 def shelters():
     DBConnect = connectDB()
 
+    #Select trainer info for dropdown to input FK
+    trainersQuery = "SELECT trainer_id, last_name, first_name  FROM trainers ORDER BY last_name;"
+    trainersResult = executeQuery(DBConnect, trainersQuery).fetchall()
+
+    #Select foster info for dropdown to input FK
+    fostersQuery = "SELECT foster_id, last_name, first_name  FROM fosters ORDER BY last_name;"
+    fostersResult = executeQuery(DBConnect, fostersQuery).fetchall()
+
     #Select all for list
     query = "SELECT * from shelters;"
     result = executeQuery(DBConnect, query).fetchall()
-    return render_template('shelters.html', title='Shelters', allShelters=result)
+    return render_template('shelters.html', title='Shelters', allShelters=result, trainersData=trainersResult, fostersData=fostersResult)
 
 
 # Search Shelter by State
@@ -69,7 +77,7 @@ def addNewShelter():
     executeQuery(DBConnect, query, data)
 
     addNewShelterTrainerMM(shelterName, shelterAddress, shelterTrainerID)
-    if shelterFosterID != "":
+    if shelterFosterID != " ":
         addNewShelterFosterMM(shelterName, shelterAddress, shelterFosterID)
     return shelters()
 
