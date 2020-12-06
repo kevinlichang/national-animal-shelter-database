@@ -114,7 +114,7 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="addTrainerDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Trainer</button>
                         <div class="dropdown-menu" aria-labelledby="addTrainerDropdownMenuButton">
                             {% for trainOpt in trainerOptions %}
-                            <a class="dropdown-item" href="/animalProfile/addTrainer?animal={{animal[0]}}&trainer={{trainOpt[2]}}">{{trainOpt[0]}} {{trainOpt[1]}}</a>
+                            <a class="dropdown-item" href="/animalProfile/trainer/add/{{animal[0]}}/{{trainOpt[2]}}/">{{trainOpt[0]}} {{trainOpt[1]}}</a>
                             {% endfor %}
                         </div>
                       </div>
@@ -124,7 +124,7 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="removeTrainerDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Remove Trainer</button>
                         <div class="dropdown-menu" aria-labelledby="removeTrainerDropdownMenuButton">
                             {% for train in trainerList %}
-                            <a class="dropdown-item" href="/animalProfile/removeTrainer?animal={{animal[0]}}&trainer={{train[2]}}">{{train[0]}} {{train[1]}}</a>
+                            <a class="dropdown-item" href="/animalProfile/trainer/remove/{{animal[0]}}/{{train[2]}}/">{{train[0]}} {{train[1]}}</a>
                             {% endfor %}
                         </div>
                       </div>

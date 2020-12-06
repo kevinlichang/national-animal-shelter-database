@@ -136,6 +136,18 @@ def animalProfile(animalId):
     allCages = executeQuery(DBConnect, query, data).fetchall()
 
     return render_template('animalProfile.html', title='Animals Profile', cageCurrent=currentCage[0][0], cagesList=allCages, allShelters=sheltersList, animal=resultAll[0], foster=fosterResult[0], fosterOptions=fosterList, trainerList=resultTrainer, trainerOptions=possible_trainers)
+@app.route("/animalProfile/trainer/<action>/<animal>/<trainer>/", methods=['GET','POST'])
+def updateAnimalTrainer(action, animal, trainer):
+    DBConnect = connectDB()
+
+    data = (animal, trainer)
+    print(animal)
+    if action == "add":
+        query = "INSERT INTO `animals_trainers`(`animal_id`, `trainer_id`) VALUES (%s, %s);"
+    else:
+        query = "DELETE FROM `animals_trainers` WHERE animal_id = %s AND trainer_id = %s"
+    executeQuery(DBConnect, query, data)
+    return redirect('/animalProfile/%s'%(animal)) 
 
 @app.route("/cages/")
 def cages():
