@@ -69,7 +69,8 @@ def addNewShelter():
     executeQuery(DBConnect, query, data)
 
     addNewShelterTrainerMM(shelterName, shelterAddress, shelterTrainerID)
-    addNewShelterFosterMM(shelterName, shelterAddress, shelterFosterID)
+    if shelterFosterID != "":
+        addNewShelterFosterMM(shelterName, shelterAddress, shelterFosterID)
     return shelters()
 
 #   Add new row into shelters_trainers MM table
