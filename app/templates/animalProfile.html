@@ -132,11 +132,10 @@
                 </div>
             </div>
             <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#updateAnimal">Update</button>
-            <button type="button" class="btn btn-danger mt-3" data-target="#deleteAnimal">Delete</button>
+            <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#deleteAnimal">Delete</button>
         </div>
 
       </div>
-      
       <div class="modal fade" id="updateAnimal" tableindex="-1" role="dialog" aria-labelledby="updateAnimalTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -282,5 +281,23 @@
     </div>
     
 </div>
-    
+<div class="modal fade" id="deleteAnimal" tabindex="-1" role="dialog" aria-labelledby="deleteAnimal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Animal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete {{animal[1]}}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a aria-pressed="true" class="btn btn-danger" href="/animalProfile/delete/{{animal[0]}}">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>   
 {% endblock content %}

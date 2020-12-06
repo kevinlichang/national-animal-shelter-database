@@ -189,6 +189,19 @@ def updateAnimal(animalId):
     print(data)
     executeQuery(DBConnect, query, data)
     return redirect('/animalProfile/%s'%(animalId))
+@app.route("/animalProfile/delete/<animalId>")
+def deleteAnimal(animalId):
+    DBConnect = connectDB()
+
+    query = "DELETE FROM `animals_trainers` WHERE animal_id = %s"
+    data = str(animalId)
+    data = (data,)
+    executeQuery(DBConnect, query, data)
+
+    query = "DELETE FROM `animals` WHERE animal_id = %s"
+    executeQuery(DBConnect, query, data)
+
+    return redirect('/animals/')
 
 @app.route("/cages/")
 def cages():
