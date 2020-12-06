@@ -147,7 +147,48 @@ def updateAnimalTrainer(action, animal, trainer):
     else:
         query = "DELETE FROM `animals_trainers` WHERE animal_id = %s AND trainer_id = %s"
     executeQuery(DBConnect, query, data)
-    return redirect('/animalProfile/%s'%(animal)) 
+    return redirect('/animalProfile/%s'%(animal))
+
+@app.route("/animalProfile/update/<animalId>/", methods=['GET','POST'])
+def updateAnimal(animalId):
+    DBConnect = connectDB()
+
+    animalName = str(request.form['animalName'])
+    animalType = str(request.form['animalType']) 
+    animalShelterID = str(request.form['animalShelterID'])
+    animalSex = str(request.form['animalSex'])
+    availableForAdoption = str(request.form['adoption'])
+
+    animalWeight = str(request.form['animalWeight'])
+
+    animalChipID = str(request.form['animalChipID'])
+    if animalChipID == "":
+        animalChipID = "None"
+
+    animalDescription = str(request.form['animalDescription'])
+    if animalDescription == "":
+        animalDescription = "None"
+    
+    
+    animalCages = str(request.form['animalCageID'])
+    animalFoster = str(request.form['fosterParent'])
+    animalId = str(animalId)
+
+    if animalCages == "None" and animalFoster == "None":
+        query = "UPDATE animals SET name=%s, location_shelter=%s, chip_id=%s, type=%s, sex=%s, weight_in_pounds=%s, description=%s, `available for adoption`=%s WHERE animal_id=%s"
+        data = (animalName, animalShelterID, animalChipID, animalType, animalSex, animalWeight, animalDescription, availableForAdoption, animalId)
+    elif animalCages =="None":
+        query = "UPDATE animals SET name=%s, location_shelter=%s, chip_id=%s, type=%s, sex=%s, weight_in_pounds=%s, description=%s, foster_parent=%s, `available for adoption`=%s WHERE animal_id=%s"
+        data = (animalName, animalShelterID, animalChipID, animalType, animalSex, animalWeight, animalDescription, animalFoster, availableForAdoption, animalId)
+    elif animalFoster == "None":
+        query = "UPDATE animals SET name=%s, location_shelter=%s, location_cage=%s, chip_id=%s, type=%s, sex=%s, weight_in_pounds=%s, description=%s, `available for adoption`=%s WHERE animal_id=%s"
+        data = (animalName, animalShelterID, animalCages, animalChipID, animalType, animalSex, animalWeight, animalDescription, availableForAdoption, animalId)
+    else:
+        query = "UPDATE animals SET name=%s, location_shelter=%s, location_cage=%s, chip_id=%s, type=%s, sex=%s, weight_in_pounds=%s, description=%s, foster_parent=%s, `available for adoption`=%s WHERE animal_id=%s"
+        data = (animalName, animalShelterID, animalCages, animalChipID, animalType, animalSex, animalWeight, animalDescription, animalFoster, availableForAdoption, animalId)
+    print(data)
+    executeQuery(DBConnect, query, data)
+    return redirect('/animalProfile/%s'%(animalId))
 
 @app.route("/cages/")
 def cages():
