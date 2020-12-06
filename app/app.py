@@ -21,7 +21,7 @@ def shelters():
 
 
 # Search Shelter by State
-@app.route("/shelters/", methods=["POST"])
+@app.route("/shelters/state", methods=["POST"])
 def searchSheltersByState():
     DBConnect = connectDB()
 
