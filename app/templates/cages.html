@@ -31,44 +31,63 @@
 </nav>
 
 <div class="container">
-  <h1>Cages</h1>
- 
-  <form class="mb-2" id="addCageForm" action="/cages/" method="post">
-    <h3>Add Cage</h3>
-
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="cageShelterID">Shelter Names</label>
-        <select name="cageShelterID" id="cageShelterID" class="custom-select">
-          <option selected>--Choose the shelter where the cage is located--</option>
-          {% for shelter in shelterData%}
-            <option value="{{shelter[0]}}"> {{shelter[1]}} </option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="cageLocation">Cage Location in Shelter</label>
-        <input type="text" class="form-control" id="cageLocation" name="cageLocation">
+  <div class="jumbotron">
+    <h1 class="display-4 text-center">Cages</h1>
+    <button type="button" class="btn btn-primary align-middle" data-toggle="modal" data-target="#addCage">Add Cage</button>
+  </div>
+  <div class="modal fade" id="addCage" tableindex="-1" role="dialog" aria-labelledby="addCageTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCageTitle">Add Cage</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="mb-2" id="addCageForm" action="/cages/" method="post">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="cageShelterID">Shelter Names</label>
+                <select name="cageShelterID" id="cageShelterID" class="custom-select">
+                  <option selected>--Choose the shelter where the cage is located--</option>
+                  {% for shelter in shelterData%}
+                    <option value="{{shelter[0]}}"> {{shelter[1]}} </option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="cageLocation">Cage Location in Shelter</label>
+                <input type="text" class="form-control" id="cageLocation" name="cageLocation">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-5">
+                <label for="cageName">Cage Name</label>
+                <input type="text" class="form-control" id="cageName" name="cageName">
+              </div>
+              <div class="form-group col-md-5">
+                <label for="animalType">Animal Type</label>
+                  <select type="text" name="cageAnimalType" class="form-control" id="cageAnimalType" required>
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>                        
+                  </select>
+              </div>
+              <div class="form-group col-md-2">
+                <label for="cageCapacity">Capacity</label>
+                <input type="number" class="form-control" id="cageCapacity" name="cageCapacity">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>  
+              <button type="submit" class="btn btn-primary" id="addCageBtn">Add Cage</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group col-md-5">
-        <label for="cageName">Cage Name</label>
-        <input type="text" class="form-control" id="cageName" name="cageName">
-      </div>
-      <div class="form-group col-md-5">
-        <label for="cageAnimalType">Animal Type</label>
-        <input type="text" class="form-control" id="cageAnimalType" name="cageAnimalType">
-      </div>
-      <div class="form-group col-md-2">
-        <label for="cageCapacity">Capacity</label>
-        <input type="number" class="form-control" id="cageCapacity" name="cageCapacity">
-      </div>
-    </div>
-      
-    <button type="submit" class="btn btn-primary" id="addCageBtn">Add Cage</button>
-    
-  </form>
+  </div>
+  
   <hr>
   <h3>List of Cages</h3>
   <table class="table table-hover">
@@ -112,7 +131,7 @@
                 <div class="form-row">
                   <div class="form-group col">
                     <label for="cageShelterID">Shelter Names</label>
-                    <select name="cageShelterID" class="custom-select">
+                    <select name="cageShelterID" class="custom-select" required>
                       <option value="{{cage[6]}}" selected>{{cage[1]}}</option>
                       {% for shelter in shelterData%}
                         <option value="{{shelter[0]}}"> {{shelter[1]}} </option>
@@ -129,11 +148,19 @@
                 <div class="form-row">
                   <div class="form-group col-md-5">
                     <label for="cageName">Cage Name</label>
-                    <input type="text" class="form-control" name="cageName" value="{{cage[3]}}">
+                    <input type="text" class="form-control" name="cageName" value="{{cage[3]}}" required>
                   </div>
                   <div class="form-group col-md-5">
                     <label for="cageAnimalType">Animal Type</label>
-                    <input type="text" class="form-control" name="cageAnimalType" value="{{cage[4]}}">
+                      <select type="text" name="cageAnimalType" class="form-control" id="cageAnimalType" required>
+                        <option value="{{cage[4]}}" selected>{{cage[4]}}</option>
+                        {% if cage[4] != "Dog"%}
+                          <option value="Dog">Dog</option>
+                        {% endif %}
+                        {% if cage[4] != "Cat"%}
+                          <option value="Cat">Cat</option>
+                        {% endif %}                          
+                      </select>
                   </div>
                   <div class="form-group col-md-2">
                     <label for="cageCapacity">Capacity</label>
