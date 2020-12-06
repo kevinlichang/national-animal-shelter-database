@@ -42,7 +42,7 @@
             </div>
 
             <div class="card text-center col-sm">
-                <div class="card-header">Cage Location</div>
+                <div class="card-header">Cage Name</div>
                 <div class="card-body">{{cageCurrent}}</div>
             </div>
 
@@ -114,7 +114,7 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="addTrainerDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add Trainer</button>
                         <div class="dropdown-menu" aria-labelledby="addTrainerDropdownMenuButton">
                             {% for trainOpt in trainerOptions %}
-                            <a class="dropdown-item" href="/animalProfile/addTrainer?animal={{animal[0]}}&trainer={{trainOpt[2]}}">{{trainOpt[0]}} {{trainOpt[1]}}</a>
+                            <a class="dropdown-item" href="/animalProfile/trainer/add/{{animal[0]}}/{{trainOpt[2]}}/">{{trainOpt[0]}} {{trainOpt[1]}}</a>
                             {% endfor %}
                         </div>
                       </div>
@@ -124,7 +124,7 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="removeTrainerDropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Remove Trainer</button>
                         <div class="dropdown-menu" aria-labelledby="removeTrainerDropdownMenuButton">
                             {% for train in trainerList %}
-                            <a class="dropdown-item" href="/animalProfile/removeTrainer?animal={{animal[0]}}&trainer={{train[2]}}">{{train[0]}} {{train[1]}}</a>
+                            <a class="dropdown-item" href="/animalProfile/trainer/remove/{{animal[0]}}/{{train[2]}}/">{{train[0]}} {{train[1]}}</a>
                             {% endfor %}
                         </div>
                       </div>
@@ -132,11 +132,10 @@
                 </div>
             </div>
             <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#updateAnimal">Update</button>
-            <button type="button" class="btn btn-danger mt-3" data-target="#deleteAnimal">Delete</button>
+            <button type="button" class="btn btn-danger mt-3" data-toggle="modal" data-target="#deleteAnimal">Delete</button>
         </div>
 
       </div>
-      
       <div class="modal fade" id="updateAnimal" tableindex="-1" role="dialog" aria-labelledby="updateAnimalTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -147,16 +146,24 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                  <form class="mb-2" id="updateAnimalForm" action="/animalsProfile/" method="post">                  
+                  <form class="mb-2" id="updateAnimalForm" method="post">                  
                       
                     <div class="form-row">
                         <div class="form-group col-md-4">
                           <label for="animalName">Name</label>
-                          <input type="text" class="form-control" id="animalName" name="animalName" value="{{animal[1]}}">
+                          <input type="text" class="form-control" id="animalName" name="animalName" value="{{animal[1]}}" required>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="animalType">Type</label>
-                          <input type="text" class="form-control" id="animalType" name="animalType" value="{{animal[5]}}">
+                          <select type="text" name="animalType" class="form-control" id="animalType" required>
+                            <option value="{{animal[5]}}" selected>{{animal[5]}}</option>
+                            {% if animal[5] != "Dog"%}
+                              <option value="Dog">Dog</option>
+                            {% endif %}
+                            {% if animal[5] != "Cat"%}
+                              <option value="Cat">Cat</option>
+                            {% endif %}                          
+                          </select>
                         </div>
                         <div class="form-group col-md-4">
                           <div class="form-group">
@@ -180,7 +187,7 @@
                         </div> 
                         <div class="form-group col-md-4">
                           <div class="form-group">
-                            <label for="animalCageID">Cage</label>
+                            <label for="animalCageID">Available Cage</label>
                             <select type="number" name="animalCageID" class="form-control" id="animalCageID" required>
                               <option value="{{animal[3]}}" selected>{{cageCurrent}}</option>
                               {% for cage in cagesList %}
@@ -189,9 +196,29 @@
                                 {% endif %}
                               {% endfor %}
                             </select>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="form-row">
+                         <div class="form-check form-check-inline">
+                          {% if animal[10] == 1 %}
+                            <input class="form-check-input" type="radio" name="adoption" id="adoptable" value="1" checked>
+                          {% else %}
+                            <input class="form-check-input" type="radio" name="adoption" id="adoptable" value="1">
+                          {% endif %}
+                            <label class="form-check-label" for="adoptable">Available For Adoption</label>
+                        </div> 
+                        <div class="form-check form-check-inline">
+                          {% if animal[10] == 0 %}
+                            <input class="form-check-input" type="radio" name="adoption" id="notAdoptable" value="0" checked>
+                          {% else %}
+                            <input class="form-check-input" type="radio" name="adoption" id="notAdoptable" value="0">
+                          {% endif %}
+                          <label class="form-check-label" for="notAdoptable">Not Available For Adoption</label>
                         </div> 
                       </div>
-                      </div>
+                      <div class="form-row"><p> </p></div>
                       <div class="form-row">
                         <div class="form-group col-auto">
                           <div class="form-check form-check-inline">
@@ -211,29 +238,20 @@
                             <label class="form-check-label" for="animalFemale">Female</label>
                           </div>
                         </div>
-                        <div class="form-group col-auto">
-                          <div class="form-check form-check-inline">
-                            {% if animal[10] %}
-                            <input class="form-check-input" type="checkbox" id="animalAdopted" value="1" checked>
-                            {% else %}
-                            <input class="form-check-input" type="checkbox" id="animalAdopted" value="1">
-                            {% endif %}
-                            <label class="form-check-label" for="animalAdopted">Adopted</label>
-                          </div>
-                        </div>
                         <div class="form-group col-md-3">
                           <div class="form-group">
                             <label for="fosterParent">Foster Parent</label>
                             <select type="number" name="fosterParent" class="form-control" id="fosterParent" required>
-                              {% if foster[0] == None %}
+                              {% if foster[2] == "None" %}
                                 <option value="None" selected>None</option>
                               {% else %}
                                 <option value="{{animal[9]}}" selected>{{foster[0]}} {{foster[1]}}</option>
+                                <option value="None">None</option>
                               {% endif %}
-                                <option value="None" selected>None</option>
+                                
                               {% for fosterOpt in fosterOptions%}
                                 {% if fosterOpt[1] != foster[2]%}
-                                  <option value="{{fosterOpt[2]}}">{{foster[0]}} {{foster[1]}}</option>
+                                  <option value="{{fosterOpt[2]}}">{{fosterOpt[0]}} {{fosterOpt[1]}}</option>
                                 {% endif %}
                               {% endfor %}
                             </select>
@@ -241,21 +259,21 @@
                         </div>
                         <div class="form-group col-md-3">
                           <label for="animalChipID">Chip ID</label>
-                          <input type="text" class="form-control" id="animalChipID" name="animalChipID" value="{{animal[4]}}">
+                          <input type="text" class="form-control" id="animalChipID" name="animalChipID" value="{{animal[4]}}" required>
                         </div>
                       </div>                
                       <div class="form-row">
 
                         <div class="form-group col">
                           <label for="animalDescription">Description</label>
-                          <input type="text" class="form-control" id="animalDescription" name="animalDescription" value="{{animal[8]}}">
+                          <input type="text" class="form-control" id="animalDescription" name="animalDescription" value="{{animal[8]}}" required>
                         </div> 
                       </div>                     
                       
                     
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary" id="updateAnimalBtn">Update Animal</button>
+                  <button type="submit" class="btn btn-primary" id="updateAnimalBtn" formaction="/animalProfile/update/{{animal[0]}}/">Update Animal</button>
                 </div>
               </form>
             </div>
@@ -263,5 +281,23 @@
     </div>
     
 </div>
-    
+<div class="modal fade" id="deleteAnimal" tabindex="-1" role="dialog" aria-labelledby="deleteAnimal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Animal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete {{animal[1]}}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a aria-pressed="true" class="btn btn-danger" href="/animalProfile/delete/{{animal[0]}}">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>   
 {% endblock content %}
