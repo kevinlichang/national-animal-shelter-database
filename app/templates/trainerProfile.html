@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">NASD</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/shelters/">Shelters</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/animals/">Animals</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fosters/">Fosters</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cages/">Cages</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/trainers/">Trainers</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="display-4 text-center">{{trainer[1]}} {{trainer[2]}}</h1>
+    <hr class="my-4">
+    <h3 class="mb-4 text-center">Specialty: {{trainer[3]}}</h3>
+  </div>
+
+  <div class="row">
+    <!-- <div class="card text-center col-sm">
+      <h5 class="card-header">Animals in Care</h5>
+      <ul class="list-group list-group-flush">
+        {% for animal in trainerAnimals%}
+          <li class="list-group-item">{{animal[1]}}</li>
+        {% endfor %}
+      </ul>
+    </div> -->
+
+    <div class="card text-center col-md">
+      <h5 class="card-header">Trainers here</h5>
+      <ul class="list-group list-group-flush">
+        {% for shelter in trainerShelters %}
+          <li class="list-group-item">
+            <b>{{shelter[1]}}</b> AT {{shelter[2]}}, {{shelter[3]}}, {{shelter[4]}} {{shelter[5]}}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="row mt-3">
+    <div class="col text-right">
+      <!-- Trainers Shelter modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#TSMMModal">
+        Add/Remove Shelter
+      </button>
+
+
+
+    </div>
+  </div>
+
+  <!--Trainer Shelter Modal -->
+  <div class="modal fade" id="TSMMModal" tabindex="-1" aria-labelledby="TSMMModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="TSMMModalLabel">Manage Shelters</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">            
+          {% for shelter in trainerShelters%}
+            <form action="/trainers-shelters/delete/{{shelter[0]}}" method="post">
+            <input type="hidden" name="trainerID" value="{{trainer[0]}}">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" value="{{shelter[1]}} AT {{shelter[2]}}, {{shelter[3]}}, {{shelter[4]}} {{shelter[5]}}" disabled>
+              <div class="input-group-append">
+                <button class="btn btn-outline-danger" type="submit">Delete</button>
+              </div>
+            </div>
+            </form>
+          {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <form action="/shelters-trainers/add" method="post">
+            <div class="input-group">
+              <select name="shelterID" class="custom-select">
+                <option value=" " selected>--Choose Shelter--</option>
+                {% for shelter in sheltersFKData %}
+                  <option value="{{shelter[0]}}"> {{shelter[1]}} AT {{shelter[2]}}, {{shelter[3]}}, {{shelter[4]}} {{shelter[5]}} </option>
+                {% endfor %}
+              </select>
+              <input type="hidden" name="trainerID" value="{{trainer[0]}}">
+              <input type="hidden" name="origin" value="fromTrainerPage">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Add</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>             
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

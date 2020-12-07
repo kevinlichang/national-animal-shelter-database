@@ -80,12 +80,17 @@ def addSheltersTrainers():
 
     shelterID = request.form['shelterID']
     trainerID = request.form['trainerID']
+    origin = request.form['origin']
 
     query = "INSERT INTO shelters_trainers (shelter_id, trainer_id) VALUES (%s, %s)"
     data = (shelterID, trainerID)
     executeQuery(DBConnect, query, data)
-
-    redirectRoute = "/shelterProfile/" + shelterID
+    
+    if origin == "fromShelterPage":
+        redirectRoute = "/shelterProfile/" + shelterID
+    elif origin == "fromTrainerPage":
+        redirectRoute = "/trainerProfile/" + trainerID
+    
     return redirect(redirectRoute)
 
     
