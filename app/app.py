@@ -1,20 +1,42 @@
 from flask import Flask, render_template, url_for, request, redirect
 from backend.dbConnector import connectDB, executeQuery
+from shelterProfile import sProfile # import shelter profile routes
+
+from test_MM import testMM
+
 
 app = Flask(__name__)
+app.register_blueprint(sProfile) # shelter profile blueprint
+
+app.register_blueprint(testMM)
+
+
 
 @app.route("/")
 def home():
     return render_template('home.html', title='Home')
 
+
+#
+#  -------------------------------SHELTERS-------------
+#
+
 @app.route("/shelters/")
 def shelters():
     DBConnect = connectDB()
 
+    #Select trainer info for dropdown to input FK
+    trainersQuery = "SELECT trainer_id, last_name, first_name  FROM trainers ORDER BY last_name;"
+    trainersResult = executeQuery(DBConnect, trainersQuery).fetchall()
+
+    #Select foster info for dropdown to input FK
+    fostersQuery = "SELECT foster_id, last_name, first_name  FROM fosters ORDER BY last_name;"
+    fostersResult = executeQuery(DBConnect, fostersQuery).fetchall()
+
     #Select all for list
     query = "SELECT * from shelters;"
     result = executeQuery(DBConnect, query).fetchall()
-    return render_template('shelters.html', title='Shelters', allShelters=result)
+    return render_template('shelters.html', title='Shelters', allShelters=result, trainersData=trainersResult, fostersData=fostersResult)
 
 
 # Search Shelter by State
@@ -47,18 +69,46 @@ def addNewShelter():
     shelterTotalCageCapacity = request.form['shelterTotalCageCapacity']
     shelterCurrAmtFosterParents = request.form['shelterCurrAmtFosterParents']
     shelterCurrAmtAnimalsFostered = request.form['shelterCurrAmtAnimalsFostered']
-    shelterRescureGrp = request.form.get('shelterRescureGrp')
-    if shelterRescureGrp != "1":
-        shelterRescureGrp = "0"
-    print(shelterRescureGrp)
+    shelterRescueGrp = request.form.get('shelterRescueGrp')
+    if shelterRescueGrp != "1":
+        shelterRescueGrp = "0"
+    
+    shelterTrainerID = request.form['shelterTrainerID']
 
+    shelterFosterID = request.form['shelterFosterID']
 
-    # INSERT Query
+    # INSERT Query for shelters table
     query = "INSERT INTO `shelters` (`shelter_name`, `address_street`, `address_city`, `address_state`, `address_zip`, `animal_quantity`, `cage_quantity`, `total_cage_capacity`, `current_amt_foster_parents`, `current_amt_animals_fostered`, `rescue_group`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    data = (shelterName, shelterAddress, shelterCity, shelterState, shelterZip, shelterAnimalQuantity, shelterCageQuantity, shelterTotalCageCapacity, shelterCurrAmtFosterParents, shelterCurrAmtAnimalsFostered, shelterRescureGrp)
+    data = (shelterName, shelterAddress, shelterCity, shelterState, shelterZip, shelterAnimalQuantity, shelterCageQuantity, shelterTotalCageCapacity, shelterCurrAmtFosterParents, shelterCurrAmtAnimalsFostered, shelterRescueGrp)
     executeQuery(DBConnect, query, data)
+
+    addNewShelterTrainerMM(shelterName, shelterAddress, shelterTrainerID)
+    if shelterFosterID != " ":
+        addNewShelterFosterMM(shelterName, shelterAddress, shelterFosterID)
     return shelters()
 
+#   Add new row into shelters_trainers MM table
+def addNewShelterTrainerMM(shelterName, shelterAddress, shelterTrainerID):
+    DBConnect = connectDB()
+     
+    #INSERT into shelters_trainers_MM
+    query = "INSERT INTO `shelters_trainers` (shelter_id, trainer_id) VALUES ((SELECT shelter_id FROM shelters WHERE shelter_name = %s AND address_street = %s), %s)"
+    data = (shelterName, shelterAddress, shelterTrainerID)
+    executeQuery(DBConnect, query, data)
+
+#   Add new row into shelters_fosters MM table
+def addNewShelterFosterMM(shelterName, shelterAddress, shelterFosterID):
+    DBConnect = connectDB()
+     
+    #INSERT into shelters_trainers_MM
+    query = "INSERT INTO `shelters_fosters` (shelter_id, foster_id) VALUES ((SELECT shelter_id FROM shelters WHERE shelter_name = %s AND address_street = %s), %s)"
+    data = (shelterName, shelterAddress, shelterFosterID)
+    executeQuery(DBConnect, query, data)
+
+
+#
+# ----------------------------ANIMALS---------------
+#
 @app.route("/animals/")
 def animals():
     DBConnect = connectDB()

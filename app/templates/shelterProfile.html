@@ -1,0 +1,391 @@
+{% extends "layout.html" %}
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">NASD</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/shelters/">Shelters</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/animals/">Animals</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fosters/">Fosters</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/cages/">Cages</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/trainers/">Trainers</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="display-4 text-center">{{shelter[1]}}</h1>
+    <hr class="my-4">
+    <h3 class="mb-4 text-center">{{shelter[2]}}, {{shelter[3]}}, {{shelter[4]}} {{shelter[5]}}</h3>
+    <div class="row">
+      <div class="card text-center col-md">
+        <div class="card-header">Animal Quanity</div>
+        <div class="card-body">{{shelter[6]}}</div>
+      </div>
+
+      <div class="card text-center col-md">
+        <div class="card-header">Cage Quanity</div>
+        <div class="card-body">{{shelter[7]}}</div>
+      </div>
+
+      <div class="card text-center col-md">
+        <div class="card-header">Total Cage Capacity</div>
+        <div class="card-body">{{shelter[8]}}</div>
+      </div>      
+      
+      <div class="card text-center col-md">
+        <div class="card-header">Rescue Group</div>
+        <div class="card-body">
+          {{rescue}}
+        </div>
+      </div>      
+    </div>
+    <div class="row">
+      <div class="card text-center col-md">
+        <div class="card-header">Current Amount of Foster Parents</div>
+        <div class="card-body">{{shelter[9]}}</div>
+      </div>
+
+      <div class="card text-center col-md">
+        <div class="card-header">Current Amount of Animals Fostered</div>
+        <div class="card-body">{{shelter[10]}}</div>
+      </div>      
+    </div>
+
+    <div class="row">
+      <div class="card text-center col-sm">
+        <h5 class="card-header">Trainers here</h5>
+        <ul class="list-group list-group-flush">
+          {% for trainer in shelterTrainers%}
+            <li class="list-group-item">{{trainer[1]}} {{trainer[2]}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="card text-center col-sm">
+        <h5 class="card-header">Foster Parents here</h5>
+        <ul class="list-group list-group-flush">
+          {% for foster in shelterFosters%}
+            <li class="list-group-item">{{foster[1]}} {{foster[2]}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+
+
+    <div class="row mt-3">
+      <div class="col-sm text-left">
+        <!-- Shelter Trainers modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#STMMModal">
+          Add/Remove Trainer
+        </button>
+
+        <!-- Shelter Trainers modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SFMMModal">
+          Add/Remove Foster
+        </button>
+
+      </div>
+      <div class="col-sm text-right">
+        <!-- Update Shelter modal trigger-->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateShelterModal">
+          Update Shelter Info
+        </button>
+
+        <!-- Delete modal -->
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteShelterModal">
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Update Shelter Modal -->
+  <div class="modal fade" id="updateShelterModal" tabindex="-1" aria-labelledby="updateShelterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateShelterModalLabel">Update Shelter</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form class="mb-2" id="updateShelterForm" action="/shelters/update/{{shelter[0]}}" method="post">
+          <div class="modal-body">
+            <input type="hidden" name="shelterID" value="{{shelter[0]}}">
+
+            <div class="form-group">
+              <label for="shelterName">Name</label>
+              <input type="text" class ="form-control" name="shelterName" value="{{shelter[1]}}">
+            </div>
+          
+            <fieldset>
+              <div class="form-group">
+                <label for="shelterAddress">Street Address</label>
+                <input type="text" class="form-control" name="shelterAddress" value="{{shelter[2]}}">
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="shelterCity">City</label>
+                  <input type="text" class="form-control" name="shelterCity" value="{{shelter[3]}}">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="shelterState" value="{{shelter[4]}}">{{shelter[4]}}</label>
+                  <select name="shelterState" class="custom-select">
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="shelterZip">Zip</label>
+                  <input type="text" class="form-control" name="shelterZip" value="{{shelter[5]}}">
+                </div>
+              </div>
+            </fieldset>
+        
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="shelterAnimalQuantity">Animal Quantity</label>
+                <input type="number" class="form-control" name="shelterAnimalQuantity" value="{{shelter[6]}}">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="shelterCageQuantity">Cage Quantity</label>
+                <input type="number" class="form-control" name="shelterCageQuantity" value="{{shelter[7]}}">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="shelterTotalCageCapacity">Total Cage Capacity</label>
+                <input type="number" class="form-control" name="shelterTotalCageCapacity" value="{{shelter[8]}}">
+              </div>      
+            </div>
+        
+            <div class="form-row align-items-center">
+              <div class="form-group col-md-4">
+                <label for="shelterCurrAmtFosterParents">Current Amount of Foster Parents</label>
+                <input type="number" class="form-control" name="shelterCurrAmtFosterParents" value="{{shelter[9]}}">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="shelterCurrAmtAnimalsFostered">Current Amount of Animals Fostered</label>
+                <input type="number" class="form-control" name="shelterCurrAmtAnimalsFostered" value="{{shelter[10]}}">
+              </div>
+              <div class="form-group col-md-4">
+                <p>Rescue Group</p>  
+                {% if "Yes" in rescue %}  
+                        
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="shelterRescueGrp" id="updateRescueGrp1" value="1" checked>
+                    <label class="form-check-label" for="inlineRadio1">1</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="shelterRescueGrp" id="updateRescueGrp2" value="0">
+                    <label class="form-check-label" for="inlineRadio2">2</label>
+                  </div>
+
+                {% else %}
+
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="shelterRescueGrp" id="updateRescueGrp1" value="1">
+                    <label class="form-check-label" for="inlineRadio1">1</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="shelterRescueGrp" id="updateRescueGrp2" value="0" checked>
+                    <label class="form-check-label" for="inlineRadio2">2</label>
+                  </div>
+                  
+                {% endif %}
+              </div>  
+            </div>
+          </div>
+        
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Update Info</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--Delete Modal -->
+  <div class="modal fade" id="deleteShelterModal" tabindex="-1" aria-labelledby="deleteShelterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteShelterModalLabel">Delete Shelter</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          You sure you want to remove this shelter?
+        </div>
+        <div class="modal-footer">
+          <form action="/shelters/delete/{{shelter[0]}}" method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>  
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Shelter Trainer Modal -->
+  <div class="modal fade" id="STMMModal" tabindex="-1" aria-labelledby="STMMModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="STMMModalLabel">Manage Trainers</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">            
+          {% for trainer in shelterTrainers%}
+            <form action="/shelters-trainers/delete/{{trainer[0]}}" method="post">
+            <input type="hidden" name="shelterID" value="{{shelter[0]}}">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" value="{{trainer[1]}} {{trainer[2]}}" disabled>
+              <div class="input-group-append">
+                <button class="btn btn-outline-danger" type="submit">Delete</button>
+              </div>
+            </div>
+            </form>
+          {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <form action="/shelters-trainers/add" method="post">
+            <div class="input-group">
+              <select name="trainerID" class="custom-select">
+                <option value=" " selected>--Choose Trainer--</option>
+                {% for trainer in trainersFKData%}
+                  <option value="{{trainer[0]}}"> {{trainer[1]}}, {{trainer[2]}} </option>
+                {% endfor %}
+              </select>
+              <input type="hidden" name="shelterID" value="{{shelter[0]}}">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Add</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>             
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Shelter Foster Modal -->
+  <div class="modal fade" id="SFMMModal" tabindex="-1" aria-labelledby="SFMMModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="SFMMModalLabel">Manage Fosters</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">            
+          {% for foster in shelterFosters%}
+            <form action="/shelters-fosters/delete/{{foster[0]}}" method="post">
+            <input type="hidden" name="shelterID" value="{{shelter[0]}}">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" value="{{foster[1]}} {{foster[2]}}" disabled>
+              <div class="input-group-append">
+                <button class="btn btn-outline-danger" type="submit">Delete</button>
+              </div>
+            </div>
+            </form>
+          {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <form action="/shelters-fosters/add" method="post">
+            <div class="input-group">
+              <select name="fosterID" class="custom-select">
+                <option value=" " selected>--Choose Foster Parent--</option>
+                {% for foster in fostersFKData%}
+                  <option value="{{foster[0]}}"> {{foster[1]}}, {{foster[2]}} </option>
+                {% endfor %}
+              </select>
+              <input type="hidden" name="shelterID" value="{{shelter[0]}}">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Add</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>             
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
