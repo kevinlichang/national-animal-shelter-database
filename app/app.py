@@ -1,12 +1,14 @@
 from flask import Flask, render_template, url_for, request, redirect
 from backend.dbConnector import connectDB, executeQuery
 from shelterProfile import sProfile # import shelter profile routes
+from trainerRoutes import trainRoute # import trainer page routes
 
 from test_MM import testMM
 
 
 app = Flask(__name__)
 app.register_blueprint(sProfile) # shelter profile blueprint
+app.register_blueprint(trainRoute) # trainer page blueprint
 
 app.register_blueprint(testMM)
 
@@ -82,7 +84,8 @@ def addNewShelter():
     data = (shelterName, shelterAddress, shelterCity, shelterState, shelterZip, shelterAnimalQuantity, shelterCageQuantity, shelterTotalCageCapacity, shelterCurrAmtFosterParents, shelterCurrAmtAnimalsFostered, shelterRescueGrp)
     executeQuery(DBConnect, query, data)
 
-    addNewShelterTrainerMM(shelterName, shelterAddress, shelterTrainerID)
+    if shelterTrainerID != " ":
+        addNewShelterTrainerMM(shelterName, shelterAddress, shelterTrainerID)
     if shelterFosterID != " ":
         addNewShelterFosterMM(shelterName, shelterAddress, shelterFosterID)
     return shelters()
@@ -336,9 +339,6 @@ def fosters():
     result = executeQuery(DBConnect, query).fetchall()
     return render_template('fosters.html', title='Fosters', allFosters=result)
 
-@app.route("/trainers/")
-def trainers():
-    return render_template('trainers.html', title='Trainers')
 
 if __name__ == '__main__':
     app.run(debug=True)
