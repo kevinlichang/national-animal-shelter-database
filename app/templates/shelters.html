@@ -93,16 +93,16 @@
     </div>
     
     <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="shelterTrainerID">Add Trainer at this shelter</label>
+      <div class="form-group col-md-5">
+        <label for="shelterTrainerID">Add Trainer at this shelter (optional)</label>
         <select name="shelterTrainerID" id="shelterTrainerID" class="custom-select">
-          <option selected>--Choose Trainer--</option>
+          <option value=" " selected>--Choose Trainer (optional)--</option>
           {% for trainer in trainersData%}
             <option value="{{trainer[0]}}"> {{trainer[1]}}, {{trainer[2]}} </option>
           {% endfor %}
         </select>
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-5">
         <label for="shelterFosterID">Add Foster Parent ID (optional)</label>
         <select name="shelterFosterID" id="shelterFosterID" class="custom-select">
           <option value=" " selected>--Choose Foster (optional)--</option>

@@ -1,10 +1,16 @@
 from flask import Flask, render_template, url_for, request, redirect
 from backend.dbConnector import connectDB, executeQuery
+from shelterProfile import sProfile # import shelter profile routes
 
 from test_MM import testMM
 
+
 app = Flask(__name__)
+app.register_blueprint(sProfile) # shelter profile blueprint
+
 app.register_blueprint(testMM)
+
+
 
 @app.route("/")
 def home():
