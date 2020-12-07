@@ -326,7 +326,7 @@
               <select name="trainerID" class="custom-select">
                 <option value=" " selected>--Choose Trainer--</option>
                 {% for trainer in trainersFKData%}
-                  <option value="{{trainer[0]}}"> {{trainer[1]}}, {{trainer[2]}} </option>
+                  <option value="{{trainer[0]}}"> {{trainer[1]}} {{trainer[2]}} </option>
                 {% endfor %}
               </select>
               <input type="hidden" name="shelterID" value="{{shelter[0]}}">
@@ -372,7 +372,7 @@
               <select name="fosterID" class="custom-select">
                 <option value=" " selected>--Choose Foster Parent--</option>
                 {% for foster in fostersFKData%}
-                  <option value="{{foster[0]}}"> {{foster[1]}}, {{foster[2]}} </option>
+                  <option value="{{foster[0]}}"> {{foster[1]}} {{foster[2]}} </option>
                 {% endfor %}
               </select>
               <input type="hidden" name="shelterID" value="{{shelter[0]}}">
