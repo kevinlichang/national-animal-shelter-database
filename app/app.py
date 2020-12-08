@@ -4,15 +4,10 @@ from shelterProfile import sProfile # import shelter profile routes
 from trainerRoutes import trainRoute # import trainer page routes
 from fosterRoutes import fosRoute # import trainer page routes
 
-from test_MM import testMM
-
 app = Flask(__name__)
 app.register_blueprint(sProfile) # shelter profile blueprint
 app.register_blueprint(trainRoute) # trainer page blueprint
 app.register_blueprint(fosRoute) # trainer page blueprint
-
-app.register_blueprint(testMM)
-
 
 
 @app.route("/")
