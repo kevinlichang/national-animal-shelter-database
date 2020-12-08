@@ -124,8 +124,8 @@ def addSheltersFosters():
      
     if origin == "fromShelterPage":
         redirectRoute = "/shelterProfile/" + shelterID
-    elif origin == "fromTrainerPage":
-        redirectRoute = "/trainerProfile/" + fosterID
+    elif origin == "fromFosterPage":
+        redirectRoute = "/fosterProfile/" + fosterID
 
     return redirect(redirectRoute)
 
