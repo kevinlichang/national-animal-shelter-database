@@ -15,3 +15,13 @@ def fosters():
     query = "SELECT * FROM fosters ORDER BY last_name"
     result = executeQuery(DBConnect, query).fetchall()
     return render_template('fosters.html', title='Fosters', allFosters=result, sheltersData=sFKResult)
+
+
+@fosRoute.route("/fosters/delete/<int:id>", methods=["POST"])
+def deleteFoster(id):
+    DBConnect = connectDB()
+
+    query = "DELETE FROM fosters WHERE foster_id = %s"
+    data = (id,)
+    executeQuery(DBConnect, query, data)
+    return redirect("/fosters/")
