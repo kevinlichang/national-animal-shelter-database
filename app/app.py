@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect
 from backend.dbConnector import connectDB, executeQuery
 from shelterProfile import sProfile # import shelter profile routes
 from trainerRoutes import trainRoute # import trainer page routes
+from fosterRoutes import fosRoute # import trainer page routes
 
 from test_MM import testMM
 
@@ -9,6 +10,7 @@ from test_MM import testMM
 app = Flask(__name__)
 app.register_blueprint(sProfile) # shelter profile blueprint
 app.register_blueprint(trainRoute) # trainer page blueprint
+app.register_blueprint(fosRoute) # trainer page blueprint
 
 app.register_blueprint(testMM)
 
@@ -328,17 +330,6 @@ def deleteCage(id):
     data = (id,)
     result = executeQuery(DBConnect, query, data)
     return redirect("/cages/")
-
-
-@app.route("/fosters/")
-def fosters():
-    DBConnect = connectDB()
-
-    #Select all for list
-    query = "SELECT * from fosters;"
-    result = executeQuery(DBConnect, query).fetchall()
-    return render_template('fosters.html', title='Fosters', allFosters=result)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
