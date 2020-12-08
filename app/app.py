@@ -6,7 +6,6 @@ from fosterRoutes import fosRoute # import trainer page routes
 
 from test_MM import testMM
 
-
 app = Flask(__name__)
 app.register_blueprint(sProfile) # shelter profile blueprint
 app.register_blueprint(trainRoute) # trainer page blueprint
