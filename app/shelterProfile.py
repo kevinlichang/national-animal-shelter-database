@@ -82,15 +82,16 @@ def addSheltersTrainers():
     trainerID = request.form['trainerID']
     origin = request.form['origin']
 
-    query = "INSERT INTO shelters_trainers (shelter_id, trainer_id) VALUES (%s, %s)"
-    data = (shelterID, trainerID)
-    executeQuery(DBConnect, query, data)
-    
+    if shelterID != " " and trainerID != " ":
+        query = "INSERT INTO shelters_trainers (shelter_id, trainer_id) VALUES (%s, %s)"
+        data = (shelterID, trainerID)
+        executeQuery(DBConnect, query, data)
+
     if origin == "fromShelterPage":
         redirectRoute = "/shelterProfile/" + shelterID
     elif origin == "fromTrainerPage":
         redirectRoute = "/trainerProfile/" + trainerID
-    
+
     return redirect(redirectRoute)
 
     
@@ -118,14 +119,15 @@ def addSheltersFosters():
     fosterID = request.form['fosterID']
     origin = request.form['origin']
 
-    query = "INSERT INTO shelters_fosters (shelter_id, foster_id) VALUES (%s, %s)"
-    data = (shelterID, fosterID)
-    executeQuery(DBConnect, query, data)
-     
+    if shelterID != " " and fosterID != " ":
+        query = "INSERT INTO shelters_fosters (shelter_id, foster_id) VALUES (%s, %s)"
+        data = (shelterID, fosterID)
+        executeQuery(DBConnect, query, data)
+   
     if origin == "fromShelterPage":
         redirectRoute = "/shelterProfile/" + shelterID
     elif origin == "fromFosterPage":
-        redirectRoute = "/fosterProfile/" + fosterID
+        redirectRoute = "/fosterProfile/" + fosterID  
 
     return redirect(redirectRoute)
 
