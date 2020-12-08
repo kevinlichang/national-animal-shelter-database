@@ -62,14 +62,15 @@ def addNewTrainerShelterMM(shelterID, trainerFName, trainerLName):
 @trainRoute.route("/trainers/delete/<int:id>", methods=["POST"])
 def deleteTrainer(id):
     DBConnect = connectDB()
-
-    query = "DELETE FROM trainers WHERE trainer_id = %s"
     data = (id,)
-    executeQuery(DBConnect, query, data)
     query = "DELETE FROM animals_trainers WHERE trainer_id = %s"
     executeQuery(DBConnect, query, data)
-    query = "DELETE FROM shelters_animals WHERE trainer_id = %s"
+    query = "DELETE FROM shelters_trainers WHERE trainer_id = %s"
     executeQuery(DBConnect, query, data)
+    query = "DELETE FROM trainers WHERE trainer_id = %s"
+    
+    executeQuery(DBConnect, query, data)
+
     return redirect("/trainers/")
 
 # Displays trainer info on Profile
