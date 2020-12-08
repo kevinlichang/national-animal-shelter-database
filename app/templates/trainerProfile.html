@@ -38,17 +38,8 @@
   </div>
 
   <div class="row">
-    <!-- <div class="card text-center col-sm">
-      <h5 class="card-header">Animals in Care</h5>
-      <ul class="list-group list-group-flush">
-        {% for animal in trainerAnimals%}
-          <li class="list-group-item">{{animal[1]}}</li>
-        {% endfor %}
-      </ul>
-    </div> -->
-
     <div class="card text-center col-md">
-      <h5 class="card-header">Shelters here</h5>
+      <h5 class="card-header">Shelters</h5>
       <ul class="list-group list-group-flush">
         {% for shelter in trainerShelters %}
           <li class="list-group-item">
@@ -57,20 +48,41 @@
         {% endfor %}
       </ul>
     </div>
-
   </div>
-
-  <div class="row mt-3">
-    <div class="col text-right">
-      <!-- Trainers Shelter modal -->
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#TSMMModal">
-        Add/Remove Shelter
-      </button>
-
-
-
+  <div class="row">
+    <div class="row mt-3">
+      <div class="col text-right">
+        <!-- Trainers Shelter modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#TSMMModal">
+          Add/Remove Shelter
+        </button>
+      </div>
     </div>
   </div>
+  <h1></h1>
+  <div class="row">
+    <div class="card text-center col-sm">
+      <h5 class="card-header">Animals in Care</h5>
+      <ul class="list-group list-group-flush">
+        {% for animal in trainerAnimals%}
+          <li class="list-group-item"><a href="/animalProfile/{{animal[0]}}">{{animal[1]}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="row mt-3">
+      <div class="col text-right">
+        <!-- Trainers Animal modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#TAMMModal">
+          Add/Remove Animal
+        </button>
+      </div>
+    </div>
+  </div>
+  
+
+  
 
   <!--Trainer Shelter Modal -->
   <div class="modal fade" id="TSMMModal" tabindex="-1" aria-labelledby="TSMMModalLabel" aria-hidden="true">
@@ -117,5 +129,51 @@
       </div>
     </div>
   </div>
+
+    <!--Trainer Animals Modal -->
+    <div class="modal fade" id="TAMMModal" tabindex="-1" aria-labelledby="TAMMModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="TAMMModalLabel">Manage Animals</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">            
+            {% for animal in trainerAnimals%}
+              <form action="/trainers-animals/delete/{{animal[0]}}" method="post">
+              <input type="hidden" name="trainerID" value="{{trainer[0]}}">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" value="{{animal[1]}}" disabled>
+                <div class="input-group-append">
+                  <button class="btn btn-outline-danger" type="submit">Remove</button>
+                </div>
+              </div>
+              </form>
+            {% endfor %}
+          </div>
+          <div class="modal-footer">
+            <form action="/animal-trainers/add" method="post">
+              <div class="input-group">
+                <select name="animalID" class="custom-select">
+                  <option value=" " selected>--Choose Animal--</option>
+                  {% for animal in animalsFKData %}
+                    <option value="{{animal[0]}}"> {{animal[1]}} </option>
+                  {% endfor %}
+                </select>
+                <input type="hidden" name="trainerID" value="{{trainer[0]}}">
+                <input type="hidden" name="origin" value="fromTrainerPage">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">Add</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>             
+            </form>
+  
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
 {% endblock content %}
