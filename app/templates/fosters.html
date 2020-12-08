@@ -37,23 +37,24 @@
     <h3>Add Foster</h3>
 
     <div class="form-row">
-      <div class="form-group col-md-4">
+      <div class="form-group col-md">
         <label for="fosterFName">First Name</label>
         <input type="text" class="form-control" id="fosterFName" name="fosterFName">
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md">
         <label for="fosterLName">Last Name</label>
         <input type="text" class="form-control" id="fosterLName" name="fosterLName">
       </div>
-      <div class="form-group col-md-4">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-sm">
         <label for="fosterDriverLicense">Driver License Number</label>
         <input type="text" class="form-control" id="fosterDriverLicense" name="fosterDriverLicense">
-      </div>      
-    </div>
-
-    <div class="form-group">
-      <label for="fosterHistory">Foster History</label>
-      <input type="text" class="form-control" id="fosterHistory" name="fosterHistory">
+      </div>    
+      <div class="form-group col-sm">
+        <label for="fosterPhone">Phone Number</label>
+        <input type="number" class="form-control" id="fosterPhone" name="fosterPhone">
+      </div>        
     </div>
     
     <fieldset>
@@ -78,8 +79,13 @@
     </fieldset>
 
     <div class="form-group">
-      <label for="fosterShelterID">Add Shelter ID</label>
-      <input type="number" class="form-control" id="fosterShelterID" name="fosterShelterID">
+      <label for="fosterShelterID">Add Shelter located (optional)</label>
+      <select name="fosterShelterID" class="custom-select">
+        <option value=" " selected>--Choose Shelter (optional)--</option>
+        {% for shelter in sheltersData%}
+          <option value="{{shelter[0]}}">{{shelter[1]}} IN {{shelter[2]}}, {{shelter[3]}}</option>
+        {% endfor %}
+      </select>
     </div>
 
     <button type="submit" class="btn btn-primary" id="addFosterBtn">Add Foster</button>
@@ -87,7 +93,7 @@
 
   <hr>
 
-  <h3>List of Fosters</h3>
+  <h3>List of Fosters (by last name)</h3>
   <table class="table table-hover">
     <thead class="thead-dark">
       <tr>
