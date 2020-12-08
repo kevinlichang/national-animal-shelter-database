@@ -17,13 +17,13 @@
       <li class="nav-item">
         <a class="nav-link" href="/animals/">Animals</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="/fosters/">Fosters</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/cages/">Cages</a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="/trainers/">Trainers</a>
       </li>
     </ul>
@@ -32,25 +32,28 @@
 
 <div class="container">
   <div class="jumbotron">
-    <h1 class="display-4 text-center">{{trainer[1]}} {{trainer[2]}}</h1>
+    <h1 class="display-4 text-center">{{foster[1]}} {{foster[2]}}</h1>
     <hr class="my-4">
-    <h3 class="mb-4 text-center">Specialty: {{trainer[3]}}</h3>
+    <h3 class="mb-4 text-center">{{foster[5]}}, {{foster[6]}}, {{foster[7]}} {{foster[8]}}</h3>
   </div>
 
   <div class="row">
-    <!-- <div class="card text-center col-sm">
-      <h5 class="card-header">Animals in Care</h5>
-      <ul class="list-group list-group-flush">
-        {% for animal in trainerAnimals%}
-          <li class="list-group-item">{{animal[1]}}</li>
-        {% endfor %}
-      </ul>
-    </div> -->
+    <div class="card text-center col-sm">
+      <div class="card-header">Phone Number</div>
+      <div class="card-body">{{foster[4]}}</div>
+    </div>
 
+    <div class="card text-center col-sm">
+      <div class="card-header">License Number</div>
+      <div class="card-body">{{foster[3]}}</div>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="card text-center col-md">
       <h5 class="card-header">Shelters here</h5>
       <ul class="list-group list-group-flush">
-        {% for shelter in trainerShelters %}
+        {% for shelter in fosterShelters %}
           <li class="list-group-item">
             <b>{{shelter[1]}}</b> AT {{shelter[2]}}, {{shelter[3]}}, {{shelter[4]}} {{shelter[5]}}
           </li>
@@ -62,17 +65,15 @@
 
   <div class="row mt-3">
     <div class="col text-right">
-      <!-- Trainers Shelter modal -->
+      <!-- fosters Shelter modal -->
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#TSMMModal">
         Add/Remove Shelter
       </button>
 
-
-
     </div>
   </div>
 
-  <!--Trainer Shelter Modal -->
+  <!--foster Shelter Modal -->
   <div class="modal fade" id="TSMMModal" tabindex="-1" aria-labelledby="TSMMModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
@@ -83,9 +84,9 @@
           </button>
         </div>
         <div class="modal-body">            
-          {% for shelter in trainerShelters%}
-            <form action="/trainers-shelters/delete/{{shelter[0]}}" method="post">
-            <input type="hidden" name="trainerID" value="{{trainer[0]}}">
+          {% for shelter in fosterShelters%}
+            <form action="/fosters-shelters/delete/{{shelter[0]}}" method="post">
+            <input type="hidden" name="fosterID" value="{{foster[0]}}">
             <div class="input-group mb-3">
               <input type="text" class="form-control" value="{{shelter[1]}} AT {{shelter[2]}}, {{shelter[3]}}, {{shelter[4]}} {{shelter[5]}}" disabled>
               <div class="input-group-append">
@@ -96,7 +97,7 @@
           {% endfor %}
         </div>
         <div class="modal-footer">
-          <form action="/shelters-trainers/add" method="post">
+          <form action="/shelters-fosters/add" method="post">
             <div class="input-group">
               <select name="shelterID" class="custom-select">
                 <option value=" " selected>--Choose Shelter--</option>
@@ -104,8 +105,8 @@
                   <option value="{{shelter[0]}}"> {{shelter[1]}} AT {{shelter[2]}}, {{shelter[3]}}, {{shelter[4]}} {{shelter[5]}} </option>
                 {% endfor %}
               </select>
-              <input type="hidden" name="trainerID" value="{{trainer[0]}}">
-              <input type="hidden" name="origin" value="fromTrainerPage">
+              <input type="hidden" name="fosterID" value="{{foster[0]}}">
+              <input type="hidden" name="origin" value="fromFosterPage">
               <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">Add</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
