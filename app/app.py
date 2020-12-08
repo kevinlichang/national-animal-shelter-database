@@ -4,15 +4,10 @@ from shelterProfile import sProfile # import shelter profile routes
 from trainerRoutes import trainRoute # import trainer page routes
 from fosterRoutes import fosRoute # import trainer page routes
 
-from test_MM import testMM
-
 app = Flask(__name__)
 app.register_blueprint(sProfile) # shelter profile blueprint
 app.register_blueprint(trainRoute) # trainer page blueprint
 app.register_blueprint(fosRoute) # trainer page blueprint
-
-app.register_blueprint(testMM)
-
 
 
 @app.route("/")
@@ -169,10 +164,10 @@ def animalProfile(animalId):
     fosterList = (None,)
     possible_trainers = (0,0,0)
 
-    query = "SELECT trainers.first_name, trainers.last_name, trainers.trainer_id FROM `shelters_trainers` INNER JOIN `trainers` ON shelters_trainers.trainer_id = trainers.trainer_id INNER JOIN animals_trainers ON trainers.trainer_id = animals_trainers.trainer_id WHERE trainers.animal_specialty = %s AND shelters_trainers.shelter_id = %s AND NOT animals_trainers.animal_id = %s"
+    query = "SELECT trainers.first_name, trainers.last_name, trainers.trainer_id FROM `shelters_trainers` INNER JOIN `trainers` ON shelters_trainers.trainer_id = trainers.trainer_id WHERE trainers.animal_specialty = %s AND shelters_trainers.shelter_id = %s"
     query_AnimalType = str(resultAll[0][5])
     query_ShelterId = str(resultAll[0][11])
-    trainData = (query_AnimalType, query_ShelterId, strdata)
+    trainData = (query_AnimalType, query_ShelterId)
     possible_trainers = executeQuery(DBConnect, query, trainData).fetchall()
 
     if resultAll[0][9] != None:

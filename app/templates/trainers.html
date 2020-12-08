@@ -31,48 +31,72 @@
 </nav>
 
 <div class="container">
-  <h1>Trainers</h1>
-
-  <form class="mb-2" id="addTrainerForm" action="/trainers/" method="post">
-    <h3>Add Trainer</h3>
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="trainerFName">First Name</label>
-        <input type="text" class="form-control" id="trainerFName" name="trainerFName">
+  <div class="jumbotron">
+    <h1 class="display-4 text-center">Trainer</h1>
+    <p class="lead text-center">Click a name to see more information.</p>
+    <button type="button" class="btn btn-primary align-middle" data-toggle="modal" data-target="#addTrainer">Add Trainer</button>
+  </div>
+  <div class="modal fade" id="addTrainer" tabindex="-1" role="dialog" aria-labelledby="addTrainer" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Trainer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="mb-2" id="addTrainerForm" action="/trainers/" method="post">
+            <h3>Add Trainer</h3>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="trainerFName">First Name</label>
+                <input type="text" class="form-control" id="trainerFName" name="trainerFName">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="trainerLName">Last Name</label>
+                <input type="text" class="form-control" id="trainerLName" name="trainerLName">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="trainerSpecialty">Specialty</label>
+                  <select type="text" name="trainerSpecialty" class="form-control" id="trainerSpecialty" required>
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>                
+                  </select>
+              </div>      
+            </div>
+        
+            <!-- For adding to Shelter Trianer MM table-->
+            <div class="form-group">
+              <label for="trainerShelterID">Add Shelter located (optional)</label>
+              <select name="trainerShelterID" class="custom-select">
+                <option value=" " selected>--Choose Shelter (optional)--</option>
+                {% for shelter in sheltersData%}
+                  <option value="{{shelter[0]}}">{{shelter[1]}} IN {{shelter[2]}}, {{shelter[3]}}</option>
+                {% endfor %}
+              </select>
+            </div>
+              <!-- <div class="form-group col-md-5">
+                <label for="animalTrainerID">Add Animal (optional)</label>
+                <select name="animalTrainerID" class="custom-select">
+                  <option value=" " selected>--Choose Animal (optional)--</option>
+                  {% for animal in animalsData%}
+                    <option value="{{animal[0]}}"> {{animal[1]}}</option>
+                  {% endfor %}
+                </select>
+              </div> -->
+            
+        
+            <button type="submit" class="btn btn-primary" id="addTrainerBtn">Add Trainer</button>
+          </form>
+        </div>
       </div>
-      <div class="form-group col-md-4">
-        <label for="trainerLName">Last Name</label>
-        <input type="text" class="form-control" id="trainerLName" name="trainerLName">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="trainerSpecialty">Specialty</label>
-        <input type="text" class="form-control" id="trainerSpecialty" name="trainerSpecialty">
-      </div>      
     </div>
+  </div>
 
-    <!-- For adding to Shelter Trianer MM table-->
-    <div class="form-group">
-      <label for="trainerShelterID">Add Shelter located (optional)</label>
-      <select name="trainerShelterID" class="custom-select">
-        <option value=" " selected>--Choose Shelter (optional)--</option>
-        {% for shelter in sheltersData%}
-          <option value="{{shelter[0]}}">{{shelter[1]}} IN {{shelter[2]}}, {{shelter[3]}}</option>
-        {% endfor %}
-      </select>
-    </div>
-      <!-- <div class="form-group col-md-5">
-        <label for="animalTrainerID">Add Animal (optional)</label>
-        <select name="animalTrainerID" class="custom-select">
-          <option value=" " selected>--Choose Animal (optional)--</option>
-          {% for animal in animalsData%}
-            <option value="{{animal[0]}}"> {{animal[1]}}</option>
-          {% endfor %}
-        </select>
-      </div> -->
-    
 
-    <button type="submit" class="btn btn-primary" id="addTrainerBtn">Add Trainer</button>
-  </form>
+
+  
 
   <hr>
   
@@ -80,8 +104,7 @@
   <table class="table table-hover">
     <thead class="thead-dark">
       <tr>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
+        <th scope="col">Name</th>
         <th scope="col">Specialty</th>
         <th scope="col"></th>
         <th scope="col"></th>
@@ -91,13 +114,9 @@
       {% for trainer in allTrainers %}
 
         <tr>
-          <td>{{trainer[1]}}</td>
-          <td>{{trainer[2]}}</td>
+          <td><a href="/trainerProfile/{{trainer[0]}}">{{trainer[2]}}, {{trainer[1]}}</a>
           <td>{{trainer[3]}}</td>
           <td>
-            <button type="button" class="btn btn-outline-light">
-              <a href="/trainerProfile/{{trainer[0]}}">Profile</a>
-            </button>
           </td>
 
           <td>
